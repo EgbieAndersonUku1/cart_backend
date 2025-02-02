@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a minimal cart system designed to handle frontend interactions using JavaScript and communicate with the backend via the Fetch API. The goal for this is to focus on the core functionality of managing cart items without building a full e-commerce application.
+This project is a minimal cart system designed to handle frontend interactions using JavaScript and communicate with the backend via the Fetch API. The goal for this is to focus on the core functionality of managing cart items without building a full e-commerce application, hence which is why the cart page is only built.
 
 ## Features
 
@@ -28,8 +28,9 @@ This project is a minimal cart system designed to handle frontend interactions u
 
 
 ## To do
-- Add the backend which only going to be cart related functionalities
+- Add the backend which only go to be cart related functionalities
 - Make the JS functional e.g. clicking the buttons, fetch, etc
+- Add Footer
 
 ## Notes
 
