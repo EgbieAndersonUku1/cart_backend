@@ -1,0 +1,171 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kristi&display=swap');
+
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+:root {
+    --padding-xs: 4px;
+    --padding-sm: 8px;
+    --padding-md: 16px;
+    --padding-lg: 32px;
+
+    --font-lg: 2.5rem;
+}
+
+
+/* native elements */
+/* anchor tags */
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+hr {
+    border: 1px solid rgb(189, 187, 187);
+    color: gray;
+    margin-top: 4px;
+}
+
+
+body {
+    font-family: "Roboto", serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+header {
+    margin: var(--padding-md);
+    cursor: [pointer];
+}
+
+input::placeholder {
+    font-family: "Roboto", serif;
+}
+
+
+
+/* variables */
+.center {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    font-size: var(--font-lg);
+    font-weight: bolder;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.kristi-regular {
+    font-family: "Kristi", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+.flex-space-evenly {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: var(--padding-lg);
+}
+  
+  
+/* the navigation */
+nav {
+    cursor: pointer;
+}
+
+.nav-head {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.nav-head__head a:first-child {
+    padding-left: 0;
+}
+
+.nav-head__head a {
+  
+    padding-left: 10px;
+    padding-right: 10px;
+    
+}
+
+
+.nav-img {
+    width: 100px;
+    height: 50px;
+}   
+
+
+.nav-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    margin-top: var(--padding-lg);
+}
+
+
+#nav-search {
+    width: 70%;
+    height: 40px;
+    border: 1px solid black;
+    font-size: 1rem;
+}
+
+.nav-toolbar-link {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.nav-toolbar {
+    width: 60%;
+    margin: auto;
+}
+
+.nav-toolbar .nav-toolbar__row a {
+    color: gray;
+    font-weight: bold;
+}
+
+.nav-banner {
+    background: black;
+   
+}
+    
+.nav-banner .nav-toolbar__row a {
+    color: white;
+    padding-top: var(--padding-sm);
+    padding-bottom: var(--padding-sm);
+    font-weight: bold;
+}
+
+
+
+.nav-icon {
+    height: 20px;
+    width: 20px;
+    
+}
+
+.nav-percentage-off {
+    padding-top: var(--padding-sm);
+    padding-bottom: var(--padding-sm);
+}
