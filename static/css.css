@@ -18,6 +18,9 @@
     --padding-lg: 32px;
 
     --font-lg: 2.5rem;
+
+    --width: 70%;
+    --box-shadow-primary: box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 
@@ -30,20 +33,35 @@ a {
 
 a:hover {
     text-decoration: underline;
-    color: red;
+    color: green;
+    font-weight: bold;
 }
 
 hr {
     border: 1px solid rgb(189, 187, 187);
     color: gray;
     margin-top: 4px;
+    
 }
 
+span {
+    cursor: pointer;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background: black;
+    color: white;
+}
 
 body {
     font-family: "Roboto", serif;
     font-weight: 300;
     font-style: normal;
+    
 }
 
 header {
@@ -55,7 +73,10 @@ input::placeholder {
     font-family: "Roboto", serif;
 }
 
-
+input {
+    border: 3px solid lavender;
+    height: 30px;
+}
 
 /* variables */
 .center {
@@ -64,6 +85,10 @@ input::placeholder {
     text-align: center;
 }
 
+.discount {
+    text-decoration: line-through;
+    color: red;
+}
 .title {
     font-size: var(--font-lg);
     font-weight: bolder;
@@ -73,6 +98,14 @@ input::placeholder {
     font-weight: bold;
 }
 
+.red {
+    color: red;
+}
+
+.black {
+    background: black;
+    color: white;
+}
 .kristi-regular {
     font-family: "Kristi", serif;
     font-weight: 400;
@@ -85,7 +118,23 @@ input::placeholder {
     margin-top: var(--padding-lg);
 }
   
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+.upperCase {
+    text-transform: uppercase;
+}
+
+.underline {
+    text-decoration: underline;
+}
   
+
+.padding-top {
+    margin-top: var(--padding-lg);
+}
 /* the navigation */
 nav {
     cursor: pointer;
@@ -124,7 +173,7 @@ nav {
 
 
 #nav-search {
-    width: 70%;
+    width: var(--width);
     height: 40px;
     border: 1px solid black;
     font-size: 1rem;
@@ -168,4 +217,120 @@ nav {
 .nav-percentage-off {
     padding-top: var(--padding-sm);
     padding-bottom: var(--padding-sm);
+}
+
+
+/* cart section */
+.container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    column-gap: 20px;
+    width: 95%;
+
+    
+    margin: var(--padding-lg);
+}
+
+.cart-flex-box{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    column-gap: 10px;
+}
+
+.cart-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reward {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: auto;
+    justify-content: space-evenly;
+    margin-top: var(--padding-lg);
+    box-shadow: var(--box-shadow-primary);
+    border: 1px solid lavender;
+}
+
+.cart-image {
+    height: 100px;
+    width: 100px;
+    box-shadow: var(--box-shadow-primary);
+}
+
+.info {
+    box-shadow: var(--box-shadow-primary);
+    border: 1px solid lavender;
+    color: red;
+    margin-top: var(--padding-sm);
+    margin-bottom: var(--padding-sm);
+    padding: var(--padding-sm);
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.cost-breakdown {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--padding-md);
+    
+
+}
+
+.cart-summary {
+    border: 3px solid lavender;
+    padding: var(--padding-lg);
+    box-shadow: var(--box-shadow-primary);
+    cursor: pointer;
+}
+
+#apply-form {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    gap: 2px;
+    margin-bottom: var(--padding-lg);
+}
+
+.apply-form {
+    margin-top: var(--padding-md);
+}
+
+#apply-input {
+    font-size: 1rem;
+}
+.button-lg {
+    width: 100%;
+    padding: var(--padding-md);
+}
+
+.paypal-button-table-link {
+    width: 100%;
+    border: 2px solid lavender;
+    margin-top: var(--padding-sm);
+    cursor: pointer;
+    background: #FFC439;
+    padding: 2px;
+    box-shadow: var(--box-shadow-primary);
+}
+.paypal-button-table-link:hover {
+    background: black;
+}
+
+.card-container div {
+    margin-bottom: var(--padding-md);
+}
+
+.dividor {
+    margin-top: var(--padding-lg);
+    margin-bottom: var(--padding-lg);
+}
+
+
+.cart-icon {
+    height: 30px;
+    width: 30px;
 }
