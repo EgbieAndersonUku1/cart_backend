@@ -34,5 +34,8 @@ This project is a minimal cart system designed to handle frontend interactions u
 
 ## Notes
 
-This project is intentionally limited in scope. The focus is on developing a functional cart system that communicates with a backend, rather than a fully-fledged e-commerce solution. Only a basic cart item structure is implemented, with two dummy products preloaded for testing.
+This project is intentionally limited in scope. The focus is on developing a functional cart system that communicates with a backend, rather than a fully-fledged e-commerce solution. Only a basic cart item structure is implemented, with two dummy products preloaded for testing. Also the site is not responsible on smaller device e.g mobile, tablets, etc because the responsive element hasn't been added.
 
+
+## View site
+https://egbieandersonuku1.github.io/Cart/
