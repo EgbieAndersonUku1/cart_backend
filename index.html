@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="static/css.css">
-    <title>Document</title>
+    <link rel="shortcut icon" href="static/images/cart.svg" type="image/x-icon">
+    <title>Cart</title>
 </head>
 
 <body>
@@ -94,32 +95,31 @@
     </header>
 
 
-
+    <!-- The cart section -->
     <section id="cart">
         <div class="container">
 
-            <!-- the main cart -->
             <div class="cart-product-info">
 
+                <!-- signup banner -->
                 <div class="cart-header">
 
                     <div class="cart-title">
-                        <h1>Cart (<span id="cart-quantity">1</span>)</h1>
+                        <h1>Cart (<span id="cart-quantity" aria-live="polite">1</span>)</h1>
                     </div>
 
                     <div class="login">
                         <p class="login_info"><span class="bold underline">Sign in</span> to easily redeem. Rewards for
-                            faster
-                            checkout</p>
+                            faster checkout
+                        </p>
                     </div>
-
                 </div>
 
-
+                <!-- reward banner -->
                 <div class="reward">
 
                     <div class="head">
-                        <img src="static/images/credit-cards.jpg" alt="credit card images" class="cart-image">
+                        <img src="static/images/credit-cards.jpg" alt="Various credit cards" class="cart-image">
                     </div>
 
                     <div class="body">
@@ -132,131 +132,168 @@
 
                 </div>
 
+                <!-- shipping info banner -->
                 <div class="info">
                     <p>All items in your cart marked Ships Free will ship FREE</p>
                 </div>
 
-                <div class="product">
+                <div class="product" aria-labelledby="product1">
 
+                    <!-- The card/product head -->
                     <div class="head">
+
+                        <!-- product name -->
                         <div class="product-name">
-                            <h2>PureStride White Trainers</h2>
-                            <small><span class="capitalize bold">sku:</span> BTESSWEFSXEE</small>
+                            <h3 id="product2" class="green capitalize">PureStride White Trainers</h3>
+                            <small><span class="upperCase bold">sku:</span> BTESSWEFSXEE</small>
                         </div>
 
-
+                        <!-- quantity -->
                         <div class="quantity">
-                            <div class="decrease box"><img src="static/images/subtract-circle-minus-remove.svg"
-                                    alt="" class="quantity-icon"></div>
-                            <div class="number box">1</div>
-                            <div class="increase box"><img src="static/images/plus-circle.svg" alt=""
-                                    class="quantity-icon"></div>
+                            <div class="decrease box">
+                                <img src="static/images/subtract-circle-minus-remove.svg" alt="Decrease quantity"
+                                    class="quantity-icon">
+                            </div>
+                            <div class="number box bold" aria-live="polite">1</div>
+                            <div class="increase box"><img src="static/images/plus-circle.svg" alt="Increase quantity"
+                                    class="quantity-icon">
+                            </div>
 
                         </div>
 
+                        <!-- price -->
                         <div class="price">
-                            <h3 class="red">£100</h3>
+                            <h3 class="red">
+                                <span aria-hidden="true" aria-live="polite" aria-relevant="text">£100</span>
+                                <span class="sr-only" aria-label="Price: 100 pounds">Price: £100</span>
+                            </h3>
                         </div>
+
                     </div>
+
                     <hr>
+
+                    <!-- The card/product body -->
                     <div class="body">
 
+                        <!-- image -->
                         <div class="image">
-                            <img src="static/images/p1.jpg.webp" alt="" srcset="" class="cart-product-image">
+                            <img src="static/images/p1.jpg.webp" alt="product image" class="cart-product-image">
                         </div>
 
+                        <!-- product description -->
                         <div class="product-description">
-                            <p class="product-name green bold">PureStride White Trainers</p>
-                            <p class="padding-top">Step out in style with these classic white trainers, designed for
-                                both comfort and versatility.
+                            <h3 class="product-name">PureStride White Trainers</h3>
+
+                            <p class="padding-top">
+                                Step out in style with these classic white trainers, designed for both comfort and
+                                versatility.
                                 Featuring a sleek, minimalist design, they pair effortlessly with any outfit, whether
                                 you're dressing
                                 up or keeping it casual. Made from durable materials with a cushioned sole for all-day
                                 support,
                                 these trainers are perfect for everyday wear.
                             </p>
-                            <p class="padding-top bold underline padding-bottom-sm">Ship only</p>
-                            <p> <span class="bold">Info: </span> In stock and ready to ship</p>
-                            <p><span class="bold">Shipping: </span> Standard</p>
-                            <p><span class="bold">Arrival: </span>Arrives in 6 to 7 working days</p>
-                        </div>
 
-                        <div class="activity">
-                            <div class="remove box">
-                                <img src="static/images/x-letter.svg" alt="">
-                                <p>Remove</p>
+                            <p class="padding-top bold underline padding-bottom-sm" aria-label="Shipping method">Ship
+                                only</p>
+
+                            <div aria-live="polite">
+                                <p>
+                                    <span class="bold">Info:</span> <span id="stock-status">In stock and ready to
+                                        ship</span>
+                                </p>
                             </div>
 
-                            <div class="save-to-later box">
-                                <img src="static/images/save.svg" alt="">
-                                <p>Remove</p>
+                            <p><span class="bold">Shipping:</span> Standard</p>
+                            <p><span class="bold">Arrival:</span> Arrives in 6 to 7 working days</p>
+
+                        </div>
+
+                        <!-- activity e.g remove/add -->
+                        <div class="activity">
+                            <div class="remove box" aria-label="Remove item from cart">
+                                <img src="static/images/x-letter.svg" alt="Remove icon" aria-hidden="true">
+                                <p class="remove">Remove</p>
+                            </div>
+
+                            <div class="save-to-later box" aria-label="Save item for later">
+                                <img src="static/images/save.svg" alt="Save icon" aria-hidden="true">
+                                <p class="save">Save</p>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
 
                 <div class="product">
 
                     <div class="head">
                         <div class="product-name">
-                            <h2 class="bold">UrbanFlex Classic Sneakers</h2>
-                            <small><span class="capitalize bold">sku:</span> BTESSWEFSXEE</small>
+                            <h3 class="green" id="product2">UrbanFlex Classic Sneakers</h3>
+                            <small><span class="upperCase bold" aria-label="Stock Keeping Unit">SKU:</span>
+                                BTESSWEFSXEE</small>
                         </div>
 
-
                         <div class="quantity">
-                            <div class="decrease box"><img src="static/images/subtract-circle-minus-remove.svg"
-                                    alt="" class="quantity-icon"></div>
-                            <div class="number box">1</div>
-                            <div class="increase box"><img src="static/images/plus-circle.svg" alt=""
-                                    class="quantity-icon"></div>
+                            <div class="decrease box" aria-label="Decrease quantity">
+                                <img src="static/images/subtract-circle-minus-remove.svg" alt="" class="quantity-icon"
+                                    aria-hidden="true">
+                            </div>
 
+                            <div class="number box bold" id="quantity" aria-live="polite">1</div>
+
+                            <div class="increase box" aria-label="Increase quantity">
+                                <img src="static/images/plus-circle.svg" alt="" class="quantity-icon"
+                                    aria-hidden="true">
+                            </div>
                         </div>
 
                         <div class="price">
-                            <h3 class="red">£120</h3>
+                            <h3 class="red">
+                                <span aria-hidden="true" aria-live="polite" aria-relevant="text">£120</span>
+                                <span class="sr-only" aria-label="Price: 100 pounds">Price: £120</span>
+                            </h3>
                         </div>
                     </div>
                     <hr>
+
                     <div class="body">
 
                         <div class="image">
-                            <img src="static/images/p2.jpg.webp" alt="" srcset="" class="cart-product-image">
+                            <img src="static/images/p2.jpg.webp"
+                                alt="UrbanFlex Classic Sneakers - White trainers with a cushioned sole"
+                                class="cart-product-image">
                         </div>
 
-                        <div class="product-description">
-                            <p class="product-name green bold">UrbanFlex Classic Sneakers</p>
+                        <div class="product-description" aria-labelledby="product-name">
+                            <h3 id="product-name" class="product-name">UrbanFlex Classic Sneakers</h3>
+
                             <p class="padding-top">These crisp white trainers are the perfect blend of style and
                                 comfort.
                                 With a lightweight design, breathable material, and a cushioned sole, they offer all-day
                                 support
                                 whether you're on the move or keeping it casual. A timeless essential for any wardrobe.
                             </p>
+
                             <p class="padding-top bold underline padding-bottom-sm">Ship only</p>
-                            <p> <span class="bold">Info: </span> In stock and ready to ship</p>
+                            <p><span class="bold">Info: </span> In stock and ready to ship</p>
                             <p><span class="bold">Shipping: </span> Standard</p>
-                            <p><span class="bold">Arrival: </span>Arrives in 6 to 7 working days</p>
+                            <p><span class="bold">Arrival: </span> Arrives in 6 to 7 working days</p>
                         </div>
 
                         <div class="activity">
                             <div class="remove box">
-                                <img src="static/images/x-letter.svg" alt="">
-                                <p>Remove</p>
+                                <img src="static/images/x-letter.svg" alt="remove icon">
+                                <p class="remove capitalize">Remove</p>
                             </div>
 
                             <div class="save-to-later box">
-                                <img src="static/images/save.svg" alt="">
-                                <p>Remove</p>
+                                <img src="static/images/save.svg" alt="ave icon">
+                                <p class="save capitalize">Save</p>
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
 
 
@@ -264,27 +301,27 @@
             <div class="cart-summary">
 
                 <div class="cart-container">
-                    <h1><span><img src="static/images/lock.svg" alt="" srcset="" class="cart-icon"></span> Cart
+                    <h1><span><img src="static/images/lock.svg" alt="A image of a lock" class="cart-icon"></span> Cart
                         Summary </h1>
-                    <div class="cost-breakdown">
-                        <p>Mechanise</p>
-                        <p class="price">£100.00</p>
-                    </div>
+                    <dl class="cost-breakdown">
+                        <dt>Mechanise</dt>
+                        <dd class="price">£100.00</dd>
+                    </dl>
 
-                    <div class="cost-breakdown">
-                        <p>Est. Shipping and Handling</p>
-                        <p class="price">£25.00</p>
-                    </div>
+                    <dl class="cost-breakdown">
+                        <dt>Est. Shipping and Handling</dt>
+                        <dd class="price">£25.00</dd>
+                    </dl>
 
-                    <div class="cost-breakdown">
-                        <p class="red">Shipping discount</p>
-                        <p class="price red bold">-£25.00</p>
-                    </div>
+                    <dl class="cost-breakdown">
+                        <dd class="red">Shipping discount</dd>
+                        <dt class="price red bold">-£25.00</dt>
+                    </dl>
 
-                    <div class="cost-breakdown">
-                        <p>Est. Tax</p>
-                        <p class="price">£25.00</p>
-                    </div>
+                    <dl class="cost-breakdown">
+                        <dd>Est. Tax</dd>
+                        <dt class="price">£25.00</dt>
+                    </dl>
 
                     <div class="cost-breakdown">
                         <small class="red">Estimated Tax for #25488</small>
@@ -292,10 +329,10 @@
                     </div>
                     <hr class="dividor">
 
-                    <div class="cost-breakdown">
-                        <p class="bold">Estimated Order total</p>
-                        <p class="price">£150.00</p>
-                    </div>
+                    <dl class="cost-breakdown">
+                        <dd class="bold">Estimated Order total</dd>
+                        <dt class="price">£150.00</dt>
+                    </dl>
 
                     <hr class="dividor">
 
@@ -351,13 +388,161 @@
         </div>
     </section>
 
+    <section id="gift-info">
+        <small><span><img src="static/images/gift.svg" alt="gift icon" class=""></span>If this order contains a gift,
+            you will be added to a gift message and a gift box for the eligible item
+            <a href="#" class="bold red underline">Click here for details</a>
+        </small>
+    </section>
 
+
+    <!-- What you may like section -->
+    <section id="things-you-may-like">
+        <div class="container">
+
+            <h3 class="padding-top padding-bottom-sm capitalize">Things you may like</h3>
+
+            <div class="likeable-images">
+
+                <img src="static/images/p3.jpg.webp" alt="" srcset="" class="likable-product-image">
+                <img src="static/images/p4.jpg.webp" alt="" srcset="" class="likable-product-image">
+                <img src="static/images/p5.jpg.webp" alt="" srcset="" class="likable-product-image">
+                <img src="static/images/p6.jpg.webp" alt="" srcset="" class="likable-product-image">
+                <img src="static/images/p7.jpg.webp" alt="" srcset="" class="likable-product-image">
+                <img src="static/images/p8.jpg.webp" alt="" srcset="" class="likable-product-image">
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- General information -->
+    <section id="general-information">
+        <hr class="general-information-hr">
+        <div class="container">
+
+            <div class="main">
+                <div class="returns">
+                    <h3>Returns made Easy</h3>
+
+                    <p class="padding-bottom-sm">At EU and create, we stand behnind the quality of our products, and
+                        want every purchase to be postive experience</p>
+                    <a href="#" class="capitalize underline">Our return exchange policy</a>
+                </div>
+
+                <div class="store-pickup">
+                    <p class="padding-bottom-sm">
+                        Make purchases online and pickup your item at any store or
+                        warehouse of your choice. Get your item faster and avoid
+                        shipping charges.
+                    </p>
+                    <a href="#" class="capitalize underline">Store pickup FAQ</a>
+                </div>
+            </div>
+
+            <div class="side">
+                <h3>International Shipping</h3>
+                <p class="padding-bottom-sm"> Shipping outside UK?</p>
+                <p>Complete the <a href="#" class="capitalize underline">International Order quote</a> form
+                    for eligible merchandise totaling more than £1000
+                </p>
+
+                <p class="padding-top">
+                    Shipping to Scotland? <a href="#" class="capitalize underline">Shop at our Scotland store</a>
+                </p>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- The footer -->
     <footer>
 
         <div class="container">
 
+            <div class="left-footer-side">
+                <div class="follow-us">
+
+                    <p class="bold">Sign up for our emails to get the inside scope of special offers or new products</p>
+
+                    <div class="signup padding-top ">
+
+                        <div class="signup-btn">
+                            <a href="#">Sign up</a>
+                        </div>
+
+                        <div class="stay-in-touch">
+                            <p class="padding-bottom-sm">Stay in touch</p>
+                            <a href="#"><small class="bold underline">Privacy policy</small></a>
+                        </div>
 
 
+                    </div>
+
+
+                    <div class="socials padding-top">
+                        <img src="static/images/instagram.svg" alt="" srcset="" class="social-icons">
+                        <img src="static/images/facebook.svg" alt="" srcset="" class="social-icons">
+                        <img src="static/images/gmail.svg" alt="" class="social-icons">
+                        <img src="static/images/twitter.svg" alt="" srcset="" class="social-icons">
+                    </div>
+
+                </div>
+
+                <div class="customer-service">
+                    <h4 class="capitalize">Customer services</h4>
+                    <ul>
+                        <li><a href="#">Customer Service</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Returns & Exchanges</a></li>
+                        <li><a href="#">Shipping Information</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="right-footer-side">
+                <div class="about-us padding-left-md">
+                    <h4 class="capitalize">About Us</h4>
+                    <ul>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Press & Media</a></li>
+                    </ul>
+
+                </div>
+
+                <div class="shop">
+                    <h4 class="capitalize">Shop</h4>
+                    <ul>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                        <li><a href="#">Special Offers</a></li>
+                    </ul>
+
+                </div>
+
+                <div class="legal">
+                    <h4 class="capitalize">Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Accessibility Statement</a></li>
+                        <li><a href="#">Legal Disclaimer</a></li>
+                    </ul>
+
+                </div>
+
+
+            </div>
 
         </div>
 

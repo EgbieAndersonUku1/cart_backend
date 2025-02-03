@@ -16,7 +16,7 @@
     --padding-sm: 8px;
     --padding-md: 16px;
     --padding-lg: 32px;
-
+    --padding-xl: 64px;
     --font-lg: 2.5rem;
 
     --width: 70%;
@@ -37,13 +37,16 @@ a:hover {
     font-weight: bold;
 }
 
+
+
 hr {
     border: 1px solid rgb(189, 187, 187);
     color: gray;
     margin-top: 4px;
-    
 }
 
+
+/* header elements */
 h2 {
     color: darkgreen;
 }
@@ -52,6 +55,8 @@ span {
     cursor: pointer;
 }
 
+
+/* Buttons */
 button {
     cursor: pointer;
 }
@@ -60,6 +65,8 @@ button:hover {
     background: black;
     color: white;
 }
+
+
 
 body {
     font-family: "Roboto", serif;
@@ -82,12 +89,36 @@ input {
     height: 30px;
 }
 
+ li  {
+    list-style: none;
+ }
+
+
 /* variables */
+
+.black {
+    background: black;
+    color: white;
+}
+
+
+.bold {
+    font-weight: bold;
+}
+
+
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+
 .center {
     justify-content: center;
     align-items: center;
     text-align: center;
 }
+
 
 .discount {
     text-decoration: line-through;
@@ -96,40 +127,6 @@ input {
 .title {
     font-size: var(--font-lg);
     font-weight: bolder;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.red {
-    color: red;
-}
-
-.black {
-    background: black;
-    color: white;
-}
-
-.green {
-    color: green;
-}
-
-.kristi-regular {
-    font-family: "Kristi", serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-.flex-space-evenly {
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: var(--padding-lg);
-}
-  
-
-.capitalize {
-    text-transform: capitalize;
 }
 
 .upperCase {
@@ -141,6 +138,35 @@ input {
 }
   
 
+/* colours */
+
+.red {
+    color: red;
+}
+
+
+.green {
+    color: green;
+}
+
+
+/* Fonts styles  */
+.kristi-regular {
+    font-family: "Kristi", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+
+/* Flex elements */
+  .flex-space-evenly {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: var(--padding-lg);
+}
+  
+
+/* padding and margins */
 .padding-top {
     margin-top: var(--padding-lg);
 }
@@ -148,6 +174,11 @@ input {
 .padding-bottom-sm {
     padding-bottom: 4px;
 }
+
+.padding-left-md {
+    padding-left: var(--padding-md);
+}
+
 
 /* the navigation */
 nav {
@@ -221,7 +252,6 @@ nav {
 }
 
 
-
 .nav-icon {
     height: 20px;
     width: 20px;
@@ -232,6 +262,7 @@ nav {
     padding-top: var(--padding-sm);
     padding-bottom: var(--padding-sm);
 }
+
 
 
 /* cart section */
@@ -290,7 +321,6 @@ nav {
     display: flex;
     justify-content: space-between;
     margin-top: var(--padding-md);
-    
 
 }
 
@@ -408,4 +438,140 @@ nav {
     border: 6px solid lavender;
     cursor: pointer;
   
+}
+
+
+/* Footer elements */
+footer {
+    border-top: 2px solid lavender;
+    margin-bottom: var(--padding-sm);
+    margin-top: var(--padding-xl);
+}
+
+footer .container {
+    font-size: 0.9rem;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: auto;
+
+    column-gap: var(--padding-lg);
+    width: 90%;
+}
+
+.left-footer-side {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+}
+
+
+/* social icons */
+.social-icons {
+    height: 20px;
+    width: 20px;
+    margin-right: var(--padding-md);
+   
+}
+
+.signup  {
+    display: grid;
+    grid-template-columns: 20% 75%;
+    grid-template-rows: auto;
+}
+
+ul li  {
+    
+    padding-top: var(--padding-sm);
+    padding-bottom: var(--padding-sm);
+    font-size: 0.8rem;
+}
+
+.right-footer-side {
+    border-left: 1px solid black;
+}
+
+.right-footer-side {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    column-gap: var(--padding-lg);
+}
+
+
+/* Resets grid for containers so it doesn't affect any container with .container */
+#things-you-may-like .container {
+    display: block; 
+    grid-template-columns: none; 
+    grid-template-rows: none;
+    column-gap: 0;
+   
+    margin: auto;  
+    
+}
+.likeable-images {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 5px;
+    box-shadow: var(--box-shadow-primary);
+    border: 3px solid lavender;
+}
+
+.likable-product-image {
+    height: 120px;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.likable-product-image:hover {
+    transform: scale(1.01);
+}
+
+
+#gift-info {
+    width: 95%;
+    margin: auto;
+}
+
+#general-information .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    width: var(--width);
+}
+
+#general-information .container div {
+    margin-bottom: var(--padding-lg);
+
+}
+
+.general-information-hr {
+    width: 95%;
+    margin: auto;
+    margin-top: var(--padding-lg);
+}
+
+#general-information .container h3 {
+    padding-bottom: var(--padding-sm);
+}
+
+
+
+
+img:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+}
+
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
