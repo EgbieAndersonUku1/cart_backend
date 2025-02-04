@@ -152,6 +152,8 @@
                         <div class="quantity">
                             <div class="decrease box">
                                 <img src="static/images/subtract-circle-minus-remove.svg" alt="Decrease quantity"
+                                    data-productID="product1-qty"
+                                    data-currentPrice="£100"
                                     class="quantity-icon decrease-quantity">
                             </div>
                             <div class="number box bold" aria-live="polite" id="product1-qty">1</div>
@@ -165,7 +167,7 @@
                         <!-- price -->
                         <div class="price">
                             <h3 class="red">
-                                <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product1-price">£100</span>
+                                <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product1-price" class="product-price">£100</span>
                                 <span class="sr-only" aria-label="Price: 100 pounds">Price: <span id="product1-price-span">£100</span></span>
                             </h3>
                         </div>
@@ -237,14 +239,17 @@
 
                         <div class="quantity">
                             <div class="decrease box" aria-label="Decrease quantity">
-                                <img src="static/images/subtract-circle-minus-remove.svg" alt="" class="quantity-icon"
+                                <img src="static/images/subtract-circle-minus-remove.svg" alt="" class="quantity-icon decrease-quantity"
+                                    data-productID="product2-qty"
+                                    data-currentPrice="£120"
                                     aria-hidden="true">
                             </div>
 
                             <div class="number box bold" aria-live="polite" id="product2-qty">1</div>
 
                             <div class="increase box" aria-label="Increase quantity">
-                                <img src="static/images/plus-circle.svg" alt="" class="quantity-icon increase-quantity" data-productID="product2-qty"
+                                <img src="static/images/plus-circle.svg" alt="" class="quantity-icon increase-quantity" 
+                                    data-productID="product2-qty"
                                     data-currentPrice="£120"
                                     aria-hidden="true">
                             </div>
@@ -252,7 +257,7 @@
 
                         <div class="price">
                             <h3 class="red">
-                                <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product2-price">£120</span>
+                                <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product2-price" class="product-price">£120</span>
                                 <span class="sr-only" aria-label="Price: 100 pounds">Price: £120</span>
                             </h3>
                         </div>
@@ -307,12 +312,12 @@
                         Summary </h1>
                     <dl class="cost-breakdown">
                         <dt>Mechanise</dt>
-                        <dd class="price">£100.00</dd>
+                        <dd class="price" id="price-total">£220.00</dd>
                     </dl>
 
                     <dl class="cost-breakdown">
                         <dt>Est. Shipping and Handling</dt>
-                        <dd class="price">£25.00</dd>
+                        <dd class="price" id="shipping-and-handling">£25.00</dd>
                     </dl>
 
                     <dl class="cost-breakdown">
@@ -322,7 +327,7 @@
 
                     <dl class="cost-breakdown">
                         <dd>Est. Tax</dd>
-                        <dt class="price">£25.00</dt>
+                        <dt class="price" id="price-tax">£25.00</dt>
                     </dl>
 
                     <div class="cost-breakdown">
@@ -333,7 +338,7 @@
 
                     <dl class="cost-breakdown">
                         <dd class="bold">Estimated Order total</dd>
-                        <dt class="price">£150.00</dt>
+                        <dt class="price" id="order-total">£0.00</dt>
                     </dl>
 
                     <hr class="dividor">
