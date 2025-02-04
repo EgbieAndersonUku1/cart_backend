@@ -144,7 +144,7 @@
 
                         <!-- product name -->
                         <div class="product-name">
-                            <h3 id="product2" class="green capitalize">PureStride White Trainers</h3>
+                            <h3 id="product1" class="green capitalize">PureStride White Trainers</h3>
                             <small><span class="upperCase bold">sku:</span> BTESSWEFSXEE</small>
                         </div>
 
@@ -152,11 +152,12 @@
                         <div class="quantity">
                             <div class="decrease box">
                                 <img src="static/images/subtract-circle-minus-remove.svg" alt="Decrease quantity"
-                                    class="quantity-icon">
+                                    class="quantity-icon decrease-quantity">
                             </div>
-                            <div class="number box bold" aria-live="polite">1</div>
-                            <div class="increase box"><img src="static/images/plus-circle.svg" alt="Increase quantity"
-                                    class="quantity-icon">
+                            <div class="number box bold" aria-live="polite" id="product1-qty">1</div>
+                            <div class="increase box"><img src="static/images/plus-circle.svg" alt="Increase quantity" data-productID="product1-qty"
+                                    data-currentPrice="£100"
+                                    class="quantity-icon increase-quantity">
                             </div>
 
                         </div>
@@ -164,8 +165,8 @@
                         <!-- price -->
                         <div class="price">
                             <h3 class="red">
-                                <span aria-hidden="true" aria-live="polite" aria-relevant="text">£100</span>
-                                <span class="sr-only" aria-label="Price: 100 pounds">Price: £100</span>
+                                <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product1-price">£100</span>
+                                <span class="sr-only" aria-label="Price: 100 pounds">Price: <span id="product1-price-span">£100</span></span>
                             </h3>
                         </div>
 
@@ -240,17 +241,18 @@
                                     aria-hidden="true">
                             </div>
 
-                            <div class="number box bold" id="quantity" aria-live="polite">1</div>
+                            <div class="number box bold" aria-live="polite" id="product2-qty">1</div>
 
                             <div class="increase box" aria-label="Increase quantity">
-                                <img src="static/images/plus-circle.svg" alt="" class="quantity-icon"
+                                <img src="static/images/plus-circle.svg" alt="" class="quantity-icon increase-quantity" data-productID="product2-qty"
+                                    data-currentPrice="£120"
                                     aria-hidden="true">
                             </div>
                         </div>
 
                         <div class="price">
                             <h3 class="red">
-                                <span aria-hidden="true" aria-live="polite" aria-relevant="text">£120</span>
+                                <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product2-price">£120</span>
                                 <span class="sr-only" aria-label="Price: 100 pounds">Price: £120</span>
                             </h3>
                         </div>
@@ -404,12 +406,12 @@
 
             <div class="likeable-images">
 
-                <img src="static/images/p3.jpg.webp" alt="" srcset="" class="likable-product-image">
-                <img src="static/images/p4.jpg.webp" alt="" srcset="" class="likable-product-image">
-                <img src="static/images/p5.jpg.webp" alt="" srcset="" class="likable-product-image">
-                <img src="static/images/p6.jpg.webp" alt="" srcset="" class="likable-product-image">
-                <img src="static/images/p7.jpg.webp" alt="" srcset="" class="likable-product-image">
-                <img src="static/images/p8.jpg.webp" alt="" srcset="" class="likable-product-image">
+                <img src="static/images/p3.jpg.webp" alt="likable product image"  class="likable-product-image">
+                <img src="static/images/p4.jpg.webp" alt="likable product image"  class="likable-product-image">
+                <img src="static/images/p5.jpg.webp" alt="likable product image"  class="likable-product-image">
+                <img src="static/images/p6.jpg.webp" alt="likable product image"  class="likable-product-image">
+                <img src="static/images/p7.jpg.webp" alt="likable product image"  class="likable-product-image">
+                <img src="static/images/p8.jpg.webp" alt="likable product image"  class="likable-product-image">
 
             </div>
 
@@ -549,6 +551,7 @@
 
     </footer>
 
+    <script src="static/js/cart.js" type="module"></script>
 </body>
 
 </html>
