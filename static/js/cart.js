@@ -1,9 +1,18 @@
-const cardContainer       = document.querySelector("#cart .container");
+import { getLocalStorage, removeFromLocalStorage, updateProductInLocalStorage  } from "./db.js";
+import { modifyGridAndCenterContent, updateCartQuantityTag } from "./cart-visuals..js";
+
+import { checkIfHTMLElement,
+        concatenateWithDelimiter,
+        showPopup, 
+        splitText, 
+        toggleSpinner,
+        updateCartQuantityDisplay,
+        } from "./utils.js";
+
+
 const cart                = document.getElementById("cart");
-const cartQuantityTag     = document.getElementById("cart-quantity");
+
 const cartSummaryCard     = document.getElementById("cart-summary");
-const giftInfoDiv         = document.getElementById("gift-info");
-const iconCartQuantity    = document.getElementById("icon-cart-quantity");
 const orderTotal          = document.getElementById("order-total");
 const priceTax            = document.getElementById("price-tax");
 const priceTotal          = document.getElementById("price-total");
@@ -11,11 +20,89 @@ const shippingAndHandling = document.getElementById("shipping-and-handling");
 const spinner             = document.getElementById("spinner");
 
 let   priceElementsArray  = Array.from(document.querySelectorAll(".product-price"));
+console.log(priceElementsArray)
 
+const PRODUCT_STORAGE_KEY = "products";
 
 // EventListeners
-document.addEventListener("DOMContentLoaded", handleCartSummaryPageLoad);
+
+document.addEventListener("DOMContentLoaded", () => {handleLocalStorageLoad(PRODUCT_STORAGE_KEY);});
+window.addEventListener("beforeunload", handleBeforeUnload);
 cart?.addEventListener("click", handleEventDelegeation);
+
+
+
+function handleBeforeUnload(e) {
+  
+    try {
+        const actionType      = ".increase-quantity";
+        const productElements = Array.from(document.querySelectorAll(actionType));
+
+        if (!Array.isArray(productElements) || productElements.length < 1) return;
+
+        productElements.forEach((productElement) => {
+            const productId  = productElement.dataset.productid;
+            const productInfo = getCartProductInfo(productElement, actionType.slice(1));
+
+            if (!productInfo) {
+                console.warn("The product info wasn't found");
+                return;
+            };
+
+            updateProductInLocalStorage(PRODUCT_STORAGE_KEY, productInfo, productId);
+           
+        } );
+
+    } catch (error) {
+        console.error("Unexpected error in handleBeforeUnload:", error);   
+
+    };
+       
+};
+
+
+
+
+function handleLocalStorageLoad(key) {
+
+    const products = getLocalStorage(key);
+
+    if (!products) return;
+
+    if (!Array.isArray(products) || products.length == 0) {
+        console.warn(`The product is either not an array or it is empty: Got TypeL ${(typeof products)}, value: ${products}`);
+        return;
+    };
+
+    debugger;
+
+    const EXPECTED_NO_OF_KEYS = 4;
+
+    products.forEach((product) => {
+
+        const productKeys = Object.keys(product);
+
+        if ( productKeys < EXPECTED_NO_OF_KEYS) {
+            console.warn(`There is ${ EXPECTED_NO_OF_KEYS - productKeys} keys missing from the product object.`);
+        } else {
+           
+           // try to update the counter variable first - if the fails don't bother updating the product variabes
+            const isSuccess = updateCartQuantityDisplay(product.selectorID, product.currentQty);
+      
+            if (isSuccess) {
+
+                updateCartPrice(product.productIDName, product.currentQty, product.currentPrice);
+                updateCartSummary();
+                updateCartQuantityTag(priceElementsArray);
+               
+            } else {
+                console.warn(`Missing selector or invalid selector for product: ${product.selectorID}`);
+            }
+        
+        }
+    })
+}
+
 
 
 /**
@@ -33,23 +120,14 @@ function handleEventDelegeation(e) {
 }
 
 
-/**
- * When the page loads handles the cart summary by setting the variables
- * to it, i.e the price, shipping cost, overall cost and the tax.
- */
-function handleCartSummaryPageLoad() {
-    updateCartQuantityTag();
-    updateCartSummary();
-}
-
 
 /**
  * Updates the quantity of a product in the cart when either decrease or increase button is clicked.
  * @param {Event} e - The event object triggered by clicking the button.
  * @param {string} actionType - The type of action to perform e.g increase or decrease.
  */
-function updateCartQuantity(e, actionType) {
 
+function updateCartQuantity(e, actionType) {
 
     try {
         const {productIDName, currentProductQtyElement, currentQty, currentPrice } = getCartProductInfo(e, actionType);
@@ -63,6 +141,7 @@ function updateCartQuantity(e, actionType) {
             }
     
             currentProductQtyElement.textContent = newQuantity;
+            
             updateCartPrice(productIDName, newQuantity, currentPrice); 
         }; 
     } catch (error) {
@@ -91,10 +170,29 @@ function updateCartQuantity(e, actionType) {
  * the function logs an error and returns undefined.
  */
 function getCartProductInfo(e, qtySelectorID) {
-    if (!e.target.classList.contains(qtySelectorID)) return;
+    
+    
+    // uses `e.target` to access the classList if an event is passed in,
+    // else accesses the classList directly if select element is passed in
+    try {
+        if (!e.target.classList.contains(qtySelectorID)) return;
+    } catch (error) {
+        if (!e.classList.contains(qtySelectorID)) return;
+    }
+    
+    let productID;
+    let currentPrice;
 
-    const productID     = e.target.dataset.productid;
-    const currentPrice  = e.target.dataset.currentprice || 0;
+    // uses `e.target` to access the dataset if an event is passed in,
+    // else accesses the dataset directly if select element is passed in
+    try {
+        productID     = e.target.dataset.productid;
+        currentPrice  = e.target.dataset.currentprice || 0;
+    } catch (error) {
+        productID     = e.dataset.productid;
+        currentPrice  = e.dataset.currentprice || 0;
+    }
+  
     const productIDName = splitText(productID)[0];
 
     if (!productIDName) {
@@ -108,14 +206,15 @@ function getCartProductInfo(e, qtySelectorID) {
     if (!checkIfHTMLElement(currentProductQtyElement, currentProductQtyID)) return;
 
     const currentQty  = parseInt(currentProductQtyElement.textContent, 10) || 0;
-
     const productInfo = {
         productIDName: productIDName,
         currentProductQtyElement: currentProductQtyElement,
         currentQty: currentQty,
         currentPrice: currentPrice,
+        selectorID: currentProductQtyElement.id,
 
     }
+
     return productInfo;
 }
 
@@ -198,62 +297,10 @@ function updateCartPrice(productName, quantity, currentPriceStr) {
     const newPrice   = currentPrice * quantity
     
     currentPriceElement.textContent = concatenateWithDelimiter(sign, newPrice.toString());
-    updateCartQuantityTag();
+    updateCartQuantityTag(priceElementsArray);
 
 }
 
-
-/**
- * Updates the cart quantity tag. This tag is responsible for displaying the number of items in
- * the cart.
- */
-function updateCartQuantityTag() {
-    if (!checkIfHTMLElement(cartQuantityTag, "Cart quantity tag") || (!checkIfHTMLElement(iconCartQuantity, "Icon cart quantity")) ) {
-        console.error("The cart quantity selector tag which displays the total number of item in the cart is invalid");
-    };
-
-    const numOfCartItems = priceElementsArray.length;
-
-    cartQuantityTag.textContent  = (numOfCartItems);
-    iconCartQuantity.textContent = numOfCartItems;
-
-    showPopup(iconCartQuantity);
-}
-
-
-
-
-
-/**
- * Splits a string using a specified delimiter.
- * @param {string} text - The text to be split.
- * @param {string} [delimiter="-"] - The delimiter to use for splitting. Defaults to "-".
- * @returns {string[]} - An array of substrings.
- */
-function splitText(text, delimiter = "-") {
-    return text ? text.split(delimiter) : [];
-}
-
-
-/**
- * Concatenates two strings with a delimiter in between.
- * @param {string} first     - The first string.
- * @param {string} second    - The second string.
- * @param {string} delimiter - The delimiter to use if none is provide concatenates the two strings.
- * @returns {string}         - The concatenated string.
- */
-function concatenateWithDelimiter(first, second, delimiter = "") {
-    return `${first}${delimiter}${second}`;
-}
-
-
-function checkIfHTMLElement(element, elementName = "Unknown") {
-    if (!(element instanceof HTMLElement)) {
-        console.error(`Could not find the element: '${elementName}'. Ensure the selector is correct.`);
-        return false;
-    }
-    return true;
-}
 
 
 
@@ -295,9 +342,10 @@ function removeFromCart(e) {
 
         setTimeout(() => {
             productDiv.remove();
-            updateProductArray();
+
+            updateProductArray(priceElementsArray);
             updateCartSummary();
-            updateCartQuantityTag();
+            updateCartQuantityTag(priceElementsArray);
             toggleSpinner(false);
             removeCardSummary();
 
@@ -329,51 +377,7 @@ function removeCardSummary() {
 
 
 
-/**
- * Toggles the visibility of the spinner.
- * 
- * This function shows or hides the spinner by setting its display property to either 'block' or 'none'.
- * 
- * @param {boolean} [show=true] - A boolean indicating whether to show or hide the spinner.
- *                               If `true`, the spinner is shown; if `false`, it is hidden.
- */
-function toggleSpinner(show=true) {
-    spinner.style.display = show ? "block" : "none";
-}
 
-
-/**
- * Recenters the cart layout html page when there are no items in the cart.
- * 
- * This function adjusts the grid structure and applies centering styles to ensure 
- * the page layout remains visually balanced when the cart is empty.
- * 
- * Error messages are logged to the console if any required elements are missing.
- */
-function modifyGridAndCenterContent() {
-    if (!checkIfHTMLElement(cardContainer, "Cart container")) {
-        console.error("The main cart container wasn't found");
-    };
-
-    if (!checkIfHTMLElement(giftInfoDiv, "The gift tag div")) {
-        console.error("The gift div box containing has an invalid selector")
-    }
-
-    cardContainer.style.gridTemplateColumns = "100%";
-    cardContainer.classList.add("center");
-    giftInfoDiv.classList.add("center");
-};
-
-
-
-function showPopup(element, duration=500) {
-    element.classList.add("popup");
-
-    setTimeout(() => {
-        element.classList.remove("popup");
-    }, duration);
-
-}
 
 
 function updateProductArray() {
