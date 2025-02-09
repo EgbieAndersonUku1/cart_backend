@@ -20,6 +20,7 @@ export function getLocalStorage(key) {
     }
 }
 
+
 export function removeFromLocalStorage(key, id) {
     const items      = getLocalStorage(key);
     const NOT_FOUND  = -1;
@@ -34,6 +35,7 @@ export function removeFromLocalStorage(key, id) {
         console.log(`Attempted to remove item with id ${id} but it wasn't found.`);
     }
 }
+
 
 export function updateProductInLocalStorage(key, productInfo, productID) {
     const NOT_FOUND = -1;
@@ -59,7 +61,7 @@ export function updateProductInLocalStorage(key, productInfo, productID) {
         setLocalStorage(key, products);
         
     } else {
-        console.warn(`One or more fo the elements wasn't found: name: ${productIDName}, element: ${currentProductQtyElement}, qty: ${currentQty}, price: ${currentPrice}`)
+        console.warn(`One or more fo the elements wasn't found: name: ${productInfo.productIDName}, element: ${currentProductQtyElement}, qty: ${currentQty}, price: ${currentPrice}`)
     }
 
 }
