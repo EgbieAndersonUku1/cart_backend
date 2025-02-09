@@ -9,6 +9,7 @@
     padding: 0;
     margin: 0;
     border: 0;
+   
 }
 
 :root {
@@ -30,12 +31,14 @@
 a {
     text-decoration: none;
     color: black;
+    cursor: pointer;
 }
 
 a:hover {
     text-decoration: underline;
     color: green;
     font-weight: bold;
+    cursor: pointer;
 }
 
 
@@ -125,6 +128,12 @@ input {
     text-decoration: line-through;
     color: var(--darker-red);
 }
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .title {
     font-size: var(--font-lg);
     font-weight: bolder;
@@ -167,6 +176,10 @@ input {
     margin-top: var(--padding-lg);
 }
   
+.flex-space-between {
+    display: flex;
+    justify-content: space-between;
+}
 
 /* padding and margins */
 .padding-top {
@@ -651,4 +664,123 @@ img:hover {
     font-weight: bold;
     color: #333; 
     margin-bottom: 10px;
+}
+
+
+
+/* save sidebar */
+#save-sidebar  {
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: white;
+    border-left: 3px solid lavender;
+
+
+}
+
+#save-sidebar .save-container {
+    display: none;
+}
+
+#save-sidebar.show {
+    width: 700px;
+    transition: transform 2s linear;   
+}
+
+
+#window-icon.hide {
+    width: 0;
+}
+
+
+.icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.icon:hover{
+    transform: rotate(45deg);
+}
+
+
+.close {
+    border-bottom: 2px solid lavender;
+    background: ghostwhite;
+    overflow: hidden;
+}
+
+
+.card  {
+    margin: 6px;
+    border: 5px solid ghostwhite;
+    padding: var(--padding-md);
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    cursor: pointer;
+}
+
+.card:first-child {
+    margin-top: var(--padding-lg);
+}
+
+.card p {
+    padding-top: var(--padding-sm);
+    padding-bottom: var(--padding-sm);
+}
+
+.card .body {
+    padding-top: var(--padding-sm);
+    padding-bottom: var(--padding-sm);
+}
+
+.card .footer {
+    border-top: 2px solid lavender;
+    padding-bottom: var(--padding-sm);
+}
+
+.card .head {
+    border-bottom: 2px solid lavender;
+}
+
+.remove-card-link {
+    font-size: 0.8rem;
+    color: blue;
+}
+
+#popup-message {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    width: 30%;
+    border: 1px solid black;
+    position: fixed;
+    bottom: -100%;
+    right: 30px;
+    background-color: #28a745;
+    color: #ffffff;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transition: bottom 0.5s ease-in-out; /* Ensure that motion is a smooth transition */
+}
+
+#popup-message.show {
+    bottom: 40px;
+    transition: 0.5s ease-in-out;
+}
+.message {
+    border-right: 1px solid white;
+    padding: var(--padding-sm);
+    text-align: left;
+}
+
+#popup-message .close-popup {
+    padding-top: var(--padding-sm);
+    background: ghostwhite;
+}
+
+
+.unclickable {
+    pointer-events: none;
 }

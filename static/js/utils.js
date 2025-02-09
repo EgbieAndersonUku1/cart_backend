@@ -1,5 +1,4 @@
 
-
 /**
  * Splits a string using a specified delimiter.
  * @param {string} text - The text to be split.
@@ -40,10 +39,13 @@ export function checkIfHTMLElement(element, elementName = "Unknown") {
  * @param {boolean} [show=true] - A boolean indicating whether to show or hide the spinner.
  *                               If `true`, the spinner is shown; if `false`, it is hidden.
  */
-export function toggleSpinner(show=true) {
-    spinner.style.display = show ? "block" : "none";
+export function toggleSpinner(spinnerElement, show=true) {
+    if (!checkIfHTMLElement(spinnerElement)) {
+        console.error("Missing spinner element");
+    }
+    spinnerElement.style.display = show ? "block"  : "none";
+    toggleScrolling(show);
 }
-
 
 
 export function showPopup(element, duration=500) {
@@ -56,23 +58,11 @@ export function showPopup(element, duration=500) {
 }
 
 
-
 export function findProductByIndex(products, selectorID) {
-    return products.findIndex((product) => product.selectorID === selectorID);
-        
+    return products.findIndex((product) => product.selectorID === selectorID);       
 }
 
 
-export function updateCartQuantityDisplay(selector, valueToUpdateWith) {
-
-    const productElement = document.getElementById(selector);
- 
-    if (!checkIfHTMLElement(productElement, valueToUpdateWith)) {
-         return false;
-    }
-    
-    productElement.textContent = valueToUpdateWith;
-    return true;
-    
- }
- 
+export function toggleScrolling(disable) {
+    document.body.style.overflow = disable ? "hidden" : "auto";
+}

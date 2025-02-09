@@ -1,16 +1,21 @@
-import { getLocalStorage, removeFromLocalStorage, updateProductInLocalStorage  } from "./db.js";
-import { modifyGridAndCenterContent, updateCartQuantityTag } from "./cart-visuals..js";
+import { getLocalStorage, updateProductInLocalStorage  } from "./db.js";
+import { closeMessageIcon, showPopupMessage } from "./messages.js";
+import { modifyGridAndCenterContent, 
+         updateCartQuantityTag, 
+         updateCartQuantityDisplay, 
+         updateSaveIconQuantity,
+        } from "./cart-visuals..js";
+
+import { handleSaveSidebar } from "./sidebar.js";
+import   getCartProductInfo from "./product.js";
+import { cardsContainer, createProductCard } from "./components.js";
 
 import { checkIfHTMLElement,
         concatenateWithDelimiter,
         showPopup, 
-        splitText, 
         toggleSpinner,
-        updateCartQuantityDisplay,
         } from "./utils.js";
 
-
-const cart                = document.getElementById("cart");
 
 const cartSummaryCard     = document.getElementById("cart-summary");
 const orderTotal          = document.getElementById("order-total");
@@ -19,17 +24,16 @@ const priceTotal          = document.getElementById("price-total");
 const shippingAndHandling = document.getElementById("shipping-and-handling");
 const spinner             = document.getElementById("spinner");
 
+
 let   priceElementsArray  = Array.from(document.querySelectorAll(".product-price"));
-console.log(priceElementsArray)
 
 const PRODUCT_STORAGE_KEY = "products";
 
-// EventListeners
 
+// EventListeners
 document.addEventListener("DOMContentLoaded", () => {handleLocalStorageLoad(PRODUCT_STORAGE_KEY);});
 window.addEventListener("beforeunload", handleBeforeUnload);
-cart?.addEventListener("click", handleEventDelegeation);
-
+window.addEventListener("click", handleEventDelegeation);
 
 
 function handleBeforeUnload(e) {
@@ -42,7 +46,7 @@ function handleBeforeUnload(e) {
 
         productElements.forEach((productElement) => {
             const productId  = productElement.dataset.productid;
-            const productInfo = getCartProductInfo(productElement, actionType.slice(1));
+            const productInfo = getCartProductInfo(productElement);
 
             if (!productInfo) {
                 console.warn("The product info wasn't found");
@@ -61,8 +65,6 @@ function handleBeforeUnload(e) {
 };
 
 
-
-
 function handleLocalStorageLoad(key) {
 
     const products = getLocalStorage(key);
@@ -73,8 +75,6 @@ function handleLocalStorageLoad(key) {
         console.warn(`The product is either not an array or it is empty: Got TypeL ${(typeof products)}, value: ${products}`);
         return;
     };
-
-    debugger;
 
     const EXPECTED_NO_OF_KEYS = 4;
 
@@ -104,21 +104,53 @@ function handleLocalStorageLoad(key) {
 }
 
 
-
 /**
  * Handles and deals with event delegation
  * @param {*} e - The event
  */
 function handleEventDelegeation(e) {
 
-    const classList  = e.target.classList;
-    const actionType = classList.contains("increase-quantity") ? "increase-quantity": classList.contains("decrease-quantity") ? "decrease-quantity": null;
+    const classList          = e.target.classList;
+    const actionType         = classList.contains("increase-quantity") ? "increase-quantity": classList.contains("decrease-quantity") ? "decrease-quantity": null;
+    const messageCloseIconID = e.target.id;
     
-    updateCartQuantity(e, actionType);
-    updateCartSummary();
-    removeFromCart(e)
+    // Ensures that `showPopup` is only triggered when the `plus` or `minus` button
+    //  is clicked, not when other elements (e.g., a link) are clicked.
+    if (actionType) {
+        updateCartSummary();
+        updateCartQuantity(e, actionType);  
+    }
+
+    if (e.target.id === messageCloseIconID) {
+        closeMessageIcon();
+    }
+    
+    removeFromCart(e);
+    handleSave(e);
+    handleSaveSidebar(e);
 }
 
+
+function handleSave(e) {
+
+    const EXPECTED_CLASS_NAMES = ["save-to-later", "save-img-icon", "p-save"];
+
+    if (EXPECTED_CLASS_NAMES.some(className => e.target.classList.contains(className))) {
+        const productInfo = getCartProductInfo(e);
+
+        if (productInfo) {
+            const cardDiv = createProductCard(productInfo);
+            try {
+                cardsContainer.add(cardDiv);
+                updateSaveIconQuantity();
+                removeFromCart(e, true);
+                showPopupMessage("Your item has been saved. You can view it in the navigation bar by clicking the save icon")
+            } catch (error) {
+                console.warn(`Something went wrong and the card div with id ${cardDiv.id} and it couldn't be saved in the saved list`);
+            }
+        }
+    }
+}
 
 
 /**
@@ -130,7 +162,8 @@ function handleEventDelegeation(e) {
 function updateCartQuantity(e, actionType) {
 
     try {
-        const {productIDName, currentProductQtyElement, currentQty, currentPrice } = getCartProductInfo(e, actionType);
+        
+        const {productIDName, currentProductQtyElement, currentQty, currentPrice } = getCartProductInfo(e);
         if (productIDName && currentProductQtyElement && currentQty && currentPrice) {
 
             const QUANTITY_SELECTOR_NAME = "increase-quantity";
@@ -147,77 +180,7 @@ function updateCartQuantity(e, actionType) {
     } catch (error) {
         return;
     }
-  
-   
-
 };
-
-
-/**
- * Retrieves product information from the cart based on a quantity selector event.
- *
- * @param {Event} e - The event triggered by interacting with the quantity selector.
- * @param {string} qtySelectorID - The CSS class or ID used to identify quantity selectors.
- * @returns {Object|undefined} An object containing product details if valid, otherwise undefined.
- * 
- * The returned object includes:
- * - `productIDName` (string): The base product ID extracted from the dataset.
- * - `currentProductQtyElement` (HTMLElement): The DOM element representing the product quantity.
- * - `currentQty` (number): The current quantity of the product in the cart.
- * - `currentPrice` (number): The current price of the product (defaulting to 0 if not found).
- *
- * If the event target does not contain the expected class or ID, or if required elements are missing,
- * the function logs an error and returns undefined.
- */
-function getCartProductInfo(e, qtySelectorID) {
-    
-    
-    // uses `e.target` to access the classList if an event is passed in,
-    // else accesses the classList directly if select element is passed in
-    try {
-        if (!e.target.classList.contains(qtySelectorID)) return;
-    } catch (error) {
-        if (!e.classList.contains(qtySelectorID)) return;
-    }
-    
-    let productID;
-    let currentPrice;
-
-    // uses `e.target` to access the dataset if an event is passed in,
-    // else accesses the dataset directly if select element is passed in
-    try {
-        productID     = e.target.dataset.productid;
-        currentPrice  = e.target.dataset.currentprice || 0;
-    } catch (error) {
-        productID     = e.dataset.productid;
-        currentPrice  = e.dataset.currentprice || 0;
-    }
-  
-    const productIDName = splitText(productID)[0];
-
-    if (!productIDName) {
-        console.error(`Expected a product ID but got '${productIDName}'.`);
-        return;
-    }
-
-    const currentProductQtyID      = concatenateWithDelimiter(productIDName, "qty", "-");
-    const currentProductQtyElement = document.getElementById(currentProductQtyID);
-
-    if (!checkIfHTMLElement(currentProductQtyElement, currentProductQtyID)) return;
-
-    const currentQty  = parseInt(currentProductQtyElement.textContent, 10) || 0;
-    const productInfo = {
-        productIDName: productIDName,
-        currentProductQtyElement: currentProductQtyElement,
-        currentQty: currentQty,
-        currentPrice: currentPrice,
-        selectorID: currentProductQtyElement.id,
-
-    }
-
-    return productInfo;
-}
-
 
 
 /**
@@ -302,8 +265,6 @@ function updateCartPrice(productName, quantity, currentPriceStr) {
 }
 
 
-
-
 /**
  * Removes a product from the cart and updates the cart summary.
  * 
@@ -320,25 +281,24 @@ function updateCartPrice(productName, quantity, currentPriceStr) {
  * 
  * @param {Event} e - The event object triggered by the remove action (e.g., clicking a remove button).
  */
-function removeFromCart(e) {
-    
-    const divID = e.target.dataset.removedivid;
+function removeFromCart(e, silent=false) {
+
+    const EXPECTED_CLASS_NAME = "remove";
+    const divID               = e.target.dataset.removedivid || e.target.className == EXPECTED_CLASS_NAME;
 
     if (divID) {
-        const productDiv = document.getElementById(divID);
+        const productDiv          = document.getElementById(divID);
         const TIME_IN_MILLSECONDS = 500;
     
         if (!checkIfHTMLElement(productDiv, divID)) {
             console.error("Failed to remove the product div");
             return;
         };
+
+        // make the item unclickable to prevent the user from clicking multiple times while it is spinner is spinning
+        productDiv.style.pointerEvents = "none";
     
-        if (!checkIfHTMLElement(spinner, "spinner")) {
-            console.error("The spinner selector wasn't found");
-            return;
-        } 
-    
-        toggleSpinner();
+        toggleSpinner(spinner);
 
         setTimeout(() => {
             productDiv.remove();
@@ -346,15 +306,19 @@ function removeFromCart(e) {
             updateProductArray(priceElementsArray);
             updateCartSummary();
             updateCartQuantityTag(priceElementsArray);
-            toggleSpinner(false);
+            toggleSpinner(spinner, false);
             removeCardSummary();
 
-
         }, TIME_IN_MILLSECONDS);
+
+        if (!silent) {
+            const message = `Successfully removed product with ID: ${divID}`;
+            showPopupMessage(message);
+        }
+       
     }
    
 };
-
 
 
 /**
@@ -376,10 +340,8 @@ function removeCardSummary() {
 }
 
 
-
-
-
-
 function updateProductArray() {
     priceElementsArray = Array.from(document.querySelectorAll(".product-price"));
 }
+
+
