@@ -441,7 +441,7 @@ nav {
 
 .product .body {
     display: grid;
-    grid-template-columns: 25% 60% 15%;
+    grid-template-columns: 25% 65% 10%;
     grid-template-rows: auto;
     column-gap: 10px;
     margin-top: 10px;
