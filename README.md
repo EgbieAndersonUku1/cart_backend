@@ -35,8 +35,8 @@ Other common attack scenarios include tampering with discount codes or altering 
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/EgbieAndersonUku1/Cart.git 
-   cd cart
+   git clone https://github.com/EgbieAndersonUku1/cart_backend.git .
+   cd cart_backend
    ```
 2. Open `index.html` in a browser to interact with the cart.
 
