@@ -7,7 +7,8 @@ This project is a minimal cart system designed to handle backend interactions us
 
 ## Key Areas of Exploration
 
-As well as processing orders from the cart, this project also explores the security risks in the interaction between the frontend and backend. A key principle in web development is never to trust data from the frontend, as it can easily be manipulated before being sent to the backend.
+As well as processing orders from the cart, this project also explores the security risks in the interaction between the frontend and backend. A key principle in web development is never to trust data sent from the frontend to the backend, as it can easily be manipulated before being sent to the backend.
+The core reason is that frontend code (HTML, JavaScript, etc.) runs on the user's device, so it can be easily manipulated by users, even by those with little technical knowledge. For example, users can modify form inputs or use browser developer tools to change data before it gets submitted to the backend. Therefore, any data sent over from the frontend to the backend should always be validate, sanitize, and verify against the data on the server side before processing or storing it. This ensures that any data sent from the frontend is safe and trustworthy.
 
 For example, imagine a user adds a single item to their cart priced at £9.99. If they manipulate the frontend to show five items at the same price, the backend may process the order incorrectly. Instead of paying £49.95 (5 × £9.99), the user could end up paying just £9.99.
 
