@@ -36,9 +36,8 @@ Other common attack scenarios include tampering with discount codes or altering 
 1. Clone the repository:
    ```sh
    git clone https://github.com/EgbieAndersonUku1/cart_backend.git .
-   cd cart_backend
+   cd cart_
    ```
-2. Open `index.html` in a browser to interact with the cart.
 
 
 ## To do
@@ -51,5 +50,3 @@ Other common attack scenarios include tampering with discount codes or altering 
 This project is intentionally limited in scope. The focus is on developing a functional cart system that communicates with a backend, rather than a fully-fledged e-commerce solution. Only a basic cart item structure is implemented, with two dummy products preloaded for testing. Also the site is not responsible on smaller device e.g mobile, tablets, etc because the responsive element hasn't been added.
 
 
-## View site
-https://egbieandersonuku1.github.io/Cart/
