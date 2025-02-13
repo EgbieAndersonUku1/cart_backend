@@ -31,7 +31,12 @@ export const cardsContainer = {
 
 
 export function createProductCard(productInfo) {
-    
+
+    if (typeof productInfo !== 'object' || productInfo === null) {
+        console.warn(`Expected a product object but got: ${typeof productInfo}`);
+        return;
+    }
+
     const cardMainDiv = document.createElement("div");
     const cardHead    = createCardHead(productInfo);
     const cardBody    = createCardBody(productInfo);
@@ -71,11 +76,6 @@ function createCardHead(productInfo) {
 function createCardBody(productInfo) {
 
     const cardBody = document.createElement("div");
-
-    if (typeof productInfo !== 'object' || productInfo === null) {
-        console.warn(`Expected a product object but got: ${typeof productInfo}`);
-        return;
-    }
 
     Object.keys(productInfo).forEach((key) => {
 

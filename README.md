@@ -19,7 +19,7 @@ Other common attack scenarios include tampering with discount codes or altering 
 
 ## Features
 
-- **Backend Handling**: JavaScript dynamically updates the cart when items are added, saved, or removed.
+- **Frontend Handling**: JavaScript dynamically updates the cart when items are added, saved, or removed.
 - **Fetch API Integration**: The system sends cart data to the backend for processing.
 - **Preloaded Items**: The cart starts with two dummy products for demonstration purposes.
 - **Minimal Backend Dependency**: The backend receives and processes cart updates but does not include a full application structure.

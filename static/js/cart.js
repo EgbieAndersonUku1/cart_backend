@@ -30,13 +30,17 @@ let   priceElementsArray  = Array.from(document.querySelectorAll(".product-price
 const PRODUCT_STORAGE_KEY = "products";
 
 
+
+validatePageElements();
+
+
 // EventListeners
 document.addEventListener("DOMContentLoaded", () => {handleLocalStorageLoad(PRODUCT_STORAGE_KEY);});
 window.addEventListener("beforeunload", handleBeforeUnload);
 window.addEventListener("click", handleEventDelegeation);
 
 
-function handleBeforeUnload(e) {
+function handleBeforeUnload() {
   
     try {
         const actionType      = ".increase-quantity";
@@ -209,11 +213,6 @@ function updateCartSummary() {
         total += value;
     })
 
-    if (!checkIfHTMLElement(priceTotal, "Price Total")) return;
-    if (!checkIfHTMLElement(priceTax,   "Price Total")) return;
-    if (!checkIfHTMLElement(orderTotal, "Price Tax")) return;
-    if (!checkIfHTMLElement(shippingAndHandling, "Shipping and Handling element")) return;
-
     const tax              = parseFloat(priceTax.textContent.slice(1));
     const shippingCost     = parseFloat(shippingAndHandling.textContent.slice(1)); 
 
@@ -329,11 +328,6 @@ function removeFromCart(e, silent=false) {
 function removeCardSummary() {
 
     if (priceElementsArray.length === 0) {
-
-        if (!checkIfHTMLElement(cartSummaryCard, "Card Summary card")) {
-            console.error(`The card selector for the card summary is invalid - got ${cartSummaryCard}`);
-            return;
-        }
         cartSummaryCard.remove();
         modifyGridAndCenterContent();
     }
@@ -345,3 +339,14 @@ function updateProductArray() {
 }
 
 
+
+function validatePageElements() {
+    if (!checkIfHTMLElement(priceTotal, "Price Total")) return;
+    if (!checkIfHTMLElement(priceTax,   "Price Total")) return;
+    if (!checkIfHTMLElement(orderTotal, "Price Tax")) return;
+    if (!checkIfHTMLElement(shippingAndHandling, "Shipping and Handling element")) return;
+    if (!checkIfHTMLElement(cartSummaryCard, "Card Summary card")) {
+        console.error(`The card selector for the card summary is invalid - got ${cartSummaryCard}`);
+        return;
+    }
+}
