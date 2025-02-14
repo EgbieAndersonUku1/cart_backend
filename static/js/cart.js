@@ -34,6 +34,7 @@ const PRODUCT_STORAGE_KEY = "products";
 validatePageElements();
 
 
+
 // EventListeners
 document.addEventListener("DOMContentLoaded", () => {handleLocalStorageLoad(PRODUCT_STORAGE_KEY);});
 window.addEventListener("beforeunload", handleBeforeUnload);
@@ -76,7 +77,7 @@ function handleLocalStorageLoad(key) {
     if (!products) return;
 
     if (!Array.isArray(products) || products.length == 0) {
-        console.warn(`The product is either not an array or it is empty: Got TypeL ${(typeof products)}, value: ${products}`);
+        window.location.reload();
         return;
     };
 
@@ -105,6 +106,7 @@ function handleLocalStorageLoad(key) {
         
         }
     })
+   
 }
 
 
@@ -169,14 +171,14 @@ function updateCartQuantity(e, actionType) {
         
         const {productIDName, currentProductQtyElement, currentQty, currentPrice } = getCartProductInfo(e);
         if (productIDName && currentProductQtyElement && currentQty && currentPrice) {
-
+            
             const QUANTITY_SELECTOR_NAME = "increase-quantity";
             const newQuantity            = actionType == QUANTITY_SELECTOR_NAME ? currentQty + 1 : currentQty - 1;
     
             if (newQuantity < 1) {
                 newQuantity = 1;
             }
-    
+         
             currentProductQtyElement.textContent = newQuantity;
             
             updateCartPrice(productIDName, newQuantity, currentPrice); 
@@ -260,6 +262,7 @@ function updateCartPrice(productName, quantity, currentPriceStr) {
     
     currentPriceElement.textContent = concatenateWithDelimiter(sign, newPrice.toString());
     updateCartQuantityTag(priceElementsArray);
+    updateCartSummary();
 
 }
 
