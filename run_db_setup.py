@@ -2,25 +2,31 @@
 import django
 import logging
 
-from os import environ
-from os.path import join
+from os import environ, mkdir
+from os.path import join, exists, abspath, dirname
 
 from products import get_products
 
 from typing import List
 
+log_dir = join(dirname(abspath(__file__)), 'logs')
+
+if not exists(log_dir):
+    print("[+] Log directory not found, creating one, please wait...")
+    
+    mkdir(log_dir)
+    
+    print("[+] Log file sucessfully created.")
+    
 # Since this is being run without using `python manage.py` this is needed to setup django otherwise an error is thrown
 environ.setdefault('DJANGO_SETTINGS_MODULE', 'cart_backend.settings') 
 django.setup()
+
 
 from cart.models import Product
 from django.conf import settings
 
 MEDIA_PATH  = join(settings.BASE_DIR, "media", "product")
-
-
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 
 
@@ -88,4 +94,7 @@ def main():
       
 
 if __name__ == "__main__":
+ 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
     main()
