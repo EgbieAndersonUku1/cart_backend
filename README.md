@@ -1,6 +1,20 @@
 # Cart System (In progress)
 
-## Overview
+
+## Table of Contents
+
+- [About the Project](#about-the-project)
+- [Key Areas of Exploration](#key-areas-of-exploration)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup Instructions](#setup-instructions)
+- [notes](#notes)
+
+
+---
+
+
+## #about-the-project
 
 This project is a minimal cart system designed to handle backend interactions using JavaScript, Django and Python and how to communicate with the backend via the Fetch API. The goal for this is to focus on the core functionality of managing cart items without building a full e-commerce application, hence which is why the cart page is only built.
 
@@ -32,22 +46,98 @@ Other common attack scenarios include tampering with discount codes or altering 
 - **`cart.js`**: Handles adding, saving, and updating cart items using JavaScript.
 - **`backend with django`** No login, registration, etc only the cart related functionalities will be added.
 
+
+## Technologies Used
+
+- **Django**: Web framework
+- **Python**: Programming language
+- **SQLite**: Database
+- **HTML, CSS, JavaScript**: Frontend
+
+
+## Setup Instructions
+
+### Prerequisites
+
+1. Install Python (version 3.8 or higher)
+2. Install pip (Python package manager)
+3. Install a virtual environment manager (optional but recommended)
+
 ## Installation & Usage
 
 1. Clone the repository:
    ```sh
    git clone https://github.com/EgbieAndersonUku1/cart_backend.git .
-   cd cart_
+   cd cart_backend
    ```
 
+
+1. Create a Virtual Environment::
+   ```sh
+   python -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate.ps1
+
+   ```
+
+1. Install Dependencies:
+   ```sh
+   pip install -r requirements.txt
+
+   ```
+
+1. Set Up the Database: 
+   ```sh
+
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+1. Create a superuser (Admin)
+   ```sh
+   python manage.py createsuperuser
+
+   ```
+
+1. Run the development server
+   ```sh
+   python manage.py runserver
+
+   Open your browser and visit:
+
+   http://127.0.0.1:8000/cart/
+
+   or
+   
+   http://127.0.0.1:8000/
+
+
+   ```
+
+1. Access the admin panel
+   ```sh
+
+   Access the Admin Panel:
+
+   http://127.0.0.1:8000/admin
+   ```
 
 ## To do
 - Add the backend which only go to be cart related functionalities
 - Make the JS functional e.g. clicking the buttons, fetch, etc
 - Add Footer
 
+
 ## Notes
 
 This project is intentionally limited in scope. The focus is on developing a functional cart system that communicates with a backend, rather than a fully-fledged e-commerce solution. Only a basic cart item structure is implemented, with two dummy products preloaded for testing. Also the site is not responsible on smaller device e.g mobile, tablets, etc because the responsive element hasn't been added.
+
+
+
+
+
+
+
+
+
 
 

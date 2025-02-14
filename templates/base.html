@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css.css' %}">
+    <link rel="shortcut icon" href="{% static  'images/cart.svg' %}"  type="image/x-icon">
+    <meta name="description" content={% block meta-content%} {% endblock %}  />
+
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <div class="spinner" id="spinner"></div>
+    
+    {% include "partials/headers.html" %}
+
+    {% block body %}{% endblock body %}
+
+    <!-- The footer -->
+    
+    {% include "partials/footer.html" %}
+    
+<script src="{% static 'js/cart.js'%}" type="module" defer></script>
+</body>
+
+</html>

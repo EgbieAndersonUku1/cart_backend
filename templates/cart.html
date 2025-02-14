@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cart{% endblock title %}
+{% block meta-content %}{% endblock meta-content %}
+
+
+{% block body %}
+
+    <!-- The cart section -->
+    {% include 'partials/cart_items.html' %}
+
+     <!-- The gift section -->
+    {% include 'partials/gift_section.html' %}
+
+     <!-- The recommedation section -->
+    {% include 'partials/recommended_products.html' %}
+
+     <!-- The general information section -->
+    {% include 'partials/general_information.html' %}
+
+     <!-- The  sidebar section -->
+    {% include 'partials/sidebar.html' %}
+
+   
+    
+    <div id="popup-message">
+        <div class="message">
+
+        </div>
+
+        <div class="close-popup center">
+            <img src="{%static '/images/x-letter (1).svg' %}" alt="Message pop icon" class="icon" id="message-pop-close-icon">
+        </div>
+    </div>
+
+
+{% endblock body %}
+
+
+   
+
+
+
+
+
+
+
+
+
