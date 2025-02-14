@@ -41,15 +41,20 @@
                 <p>All items in your cart marked Ships Free will ship FREE</p>
             </div>
 
-            <div class="product" aria-labelledby="product1" id="product1-div">
+            <div class="cards">
+
+           
+
+            {% for product in products %}
+            <div class="product" aria-labelledby="product{{ product.id}}" id="product{{product.id}}-div">
 
                 <!-- The card/product head -->
                 <div class="head">
 
                     <!-- product name -->
                     <div class="product-name">
-                        <h1 id="product1" class="green capitalize">PureStride White Trainers</h1>
-                        <small><span class="upperCase bold">sku:</span> BTESSWEFSXEE</small>
+                        <h1 id="product1" class="green capitalize">{{ product.name }}</h1>
+                        <small><span class="upperCase bold">sku:</span> BTESSWEFSXEE-{{ product.id }}-{{ product.quantity }}</small>
                     </div>
 
                     <!-- quantity -->
@@ -57,23 +62,23 @@
                         <div class="decrease box" role="button" aria-label="Decrease quantity" tabindex="0">
                             {% load static %}
                             <img src="{% static 'images/subtract-circle-minus-remove.svg' %}" alt="Decrease quantity"
-                                data-productID="product1-qty"
-                                data-productName="PureStride White Trainers"
-                                data-productDescr="Step out in style with these classic white trainers, designed for both comfort and versatility..."
-                                data-currentPrice="£100"
+                                data-productID="product{{product.id}}-qty"
+                                data-productName="{{ product.name | title }}"
+                                data-productDescr="{{ product.short_descripton }}"
+                                data-currentPrice="£{{ product.price }}"
                                 class="quantity-icon decrease-quantity clickable-icon"
                                 loading="lazy">
                             
                         </div>
-                        <div class="number box bold" aria-live="polite" id="product1-qty">1</div>
+                        <div class="number box bold" aria-live="polite" id="product{{ product.id }}-qty">1</div>
 
                         <div class="increase box" role="button" aria-label="Increase quantity" tabindex="0">
                             
                             <img src="{% static 'images/plus-circle.svg' %}" alt="Increase quantity" 
-                            data-productID="product1-qty"
-                            data-productName="PureStride White Trainers"
-                            data-productDescr="Step out in style with these classic white trainers, designed for both comfort and versatility..."
-                            data-currentPrice="£100"
+                            data-productID="product{{ product.id }}-qty"
+                            data-productName="{{ product.name | title }}"
+                            data-productDescr="{{ product.short_descripton }}"
+                            data-currentPrice="£{{ product.price }}"
                             loading="lazy"
                             class="quantity-icon increase-quantity clickable-icon">
                         </div>
@@ -83,8 +88,8 @@
                     <!-- price -->
                     <div class="price">
                         <p class="red small-heading">
-                            <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product1-price" class="product-price">£100</span>
-                            <span class="sr-only" aria-label="Price: 100 pounds">Price: <span id="product1-price-span">£100</span></span>
+                            <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product{{ product.id }}-price" class="product-price">£{{ product.price }}</span>
+                            <span class="sr-only" aria-label="Price: {{ product.price }} pounds">Price: <span id="product{{ product.id }}-price-span">£100</span></span>
                         </p>
                     </div>
 
@@ -97,7 +102,7 @@
 
                     <!-- image -->
                     <div class="image">
-                        <img src="{% static '/images/p1.jpg' %}" alt="product image" class="cart-product-image" loading="lazy" >
+                        <img src="{{ product.product_image }}" alt="product image" class="cart-product-image" loading="lazy" >
                     </div>
 
                     <!-- product description -->
@@ -105,17 +110,10 @@
                         <p class="product-name small-heading">PureStride White Trainers</p>
 
                         <p class="padding-top">
-                            Step out in style with these classic white trainers, designed for both comfort and
-                            versatility.
-                            Featuring a sleek, minimalist design, they pair effortlessly with any outfit, whether
-                            you're dressing
-                            up or keeping it casual. Made from durable materials with a cushioned sole for all-day
-                            support,
-                            these trainers are perfect for everyday wear.
+                           {{ product.description }}
                         </p>
 
-                        <p class="padding-top bold underline padding-bottom-sm" aria-label="Shipping method">Ship
-                            only</p>
+                        <p class="padding-top bold underline padding-bottom-sm capitalize" aria-label="Additional information">additional information</p>
 
                         <div aria-live="polite">
                             <p>
@@ -123,7 +121,7 @@
                                     ship</span>
                             </p>
                         </div>
-
+                        <p><span class="bold">Quantity:</span> {{ product.quantity }}</p>
                         <p><span class="bold">Shipping:</span> Standard</p>
                         <p><span class="bold">Arrival:</span> Arrives in 6 to 7 working days</p>
 
@@ -133,106 +131,26 @@
                     <div class="activity">
                         <div class="remove box" aria-label="Remove item from cart">
                             <img src="{% static 'images/x-letter.svg' %}" alt="Remove icon" 
-                                loading="lazy" aria-hidden="true" data-removeDivId="product1-div" class="clickable-icon">
+                                loading="lazy" aria-hidden="true" data-removeDivId="product{{ product.id }}-div" class="clickable-icon">
                         </div>
 
                         <div class="save-to-later box" aria-label="Save item for later">
                             <img src="{% static 'images/save.svg' %}" alt="Save icon" aria-hidden="true" class="clickable-icon save-img-icon" loading="lazy" 
-                                data-productName="PureStride White Trainers"
-                                data-productDescr="Step out in style with these classic white trainers, designed for both comfort and versatility...."
-                                data-productID="product1-qty"
-                                data-currentPrice="£100"
-                                data-removeDivId="product1-div">
+                                data-productName="{{ product.name | title }}"
+                                data-productDescr="{{ product.short_descripton }}"
+                                data-productID="product{{ product.id }}-qty"
+                                data-currentPrice="£{{ product.price }}"
+                                data-removeDivId="product{{ product.id }}-div">
                         </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
 
-            <div class="product" id="product2-div">
+        </div>
 
-                <div class="head">
-                    <div class="product-name">
-                        <h1 class="green" id="product2">UrbanFlex Classic Sneakers</h1>
-                        <small><span class="upperCase bold" aria-label="Stock Keeping Unit">SKU:</span>
-                            BTESSWEFSXEE</small>
-                    </div>
+            
 
-                    <div class="quantity">
-                        <div class="decrease box" aria-label="Decrease quantity" >
-                            <img src="{% static 'images/subtract-circle-minus-remove.svg' %}" alt="decrease item icon" class="quantity-icon decrease-quantity clickable-icon"
-                                        data-productName="UrbanFlex Classic Sneakers"
-                                        data-productDescr="These crisp white trainers are the perfect blend of style and comfort...."
-                                        data-productID="product2-qty"
-                                        data-currentPrice="£120"
-                                        aria-hidden="true"
-                                        loading="lazy">
-                        </div>
-
-                        <div class="number box bold" aria-live="polite" id="product2-qty">1</div>
-
-                        <div class="increase box" aria-label="Decrease quantity" tabindex="0">
-                            <img src="{% static '/images/plus-circle.svg' %}" alt="Decrease quantity" class="quantity-icon increase-quantity clickable-icon" 
-                                data-productName="UrbanFlex Classic Sneakers"
-                                data-productDescr="These crisp white trainers are the perfect blend of style and comfort...."
-                                data-productID="product2-qty"
-                                data-currentPrice="£120"
-                                aria-hidden="true"
-                                loading="lazy">
-                        </div>
-                    </div>
-
-                    <div class="price">
-                        <p class="red small-heading">
-                            <span aria-hidden="true" aria-live="polite" aria-relevant="text" id="product2-price" class="product-price">£120</span>
-                            <span class="sr-only" aria-label="Price: 100 pounds">Price: £120</span>
-                        </p>
-                    </div>
-                </div>
-                <hr>
-
-                <div class="body">
-
-                    <div class="image">
-                        <img src="{% static '/images/p2.jpg' %}"
-                            loading="lazy" 
-                            alt="UrbanFlex Classic Sneakers - White trainers with a cushioned sole"
-                            class="cart-product-image">
-                    </div>
-
-                    <div class="product-description" aria-labelledby="product-name">
-                        <p id="product-name" class="product-name heading-2">UrbanFlex Classic Sneakers</p>
-
-                        <p class="padding-top">These crisp white trainers are the perfect blend of style and
-                            comfort.
-                            With a lightweight design, breathable material, and a cushioned sole, they offer all-day
-                            support
-                            whether you're on the move or keeping it casual. A timeless essential for any wardrobe.
-                        </p>
-
-                        <p class="padding-top bold underline padding-bottom-sm">Ship only</p>
-                        <p><span class="bold">Info: </span> In stock and ready to ship</p>
-                        <p><span class="bold">Shipping: </span> Standard</p>
-                        <p><span class="bold">Arrival: </span> Arrives in 6 to 7 working days</p>
-                    </div>
-
-                    <div class="activity">
-                        <div class="remove box">
-                            <img src="{% static '/images/x-letter.svg' %}" alt="remove icon" loading="lazy" data-removeDivId="product2-div" class="clickable-icon">
-                        </div>
-
-                        <div class="save-to-later box">
-                            <img src="{% static '/images/save.svg' %}" alt="save image icon" class="clickable-icon save-img-icon" loading="lazy"  
-                                data-productName="UrbanFlex Classic Sneakers"
-                                data-productDescr="These crisp white trainers are the perfect blend of style and comfort...."
-                                data-productID="product2-qty"
-                                data-currentPrice="£120"
-                                data-removeDivId="product2-div"
-                                >
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- the side cart item e.g price, tax -->
