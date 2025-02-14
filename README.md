@@ -75,7 +75,7 @@ Other common attack scenarios include tampering with discount codes or altering 
 2. Create a new `.env` file in the same directory as `cart_backend`. Use the `.env-example` file as a guide.
 
 3. Open the `.env-example` file and follow these steps:
-   - Copy the `SECRET_KEY` value from `settings.py` into the `.env` file, or generate a new secret key using [Django Secret Key Generator](https://miniwebtool.com/django-secret-key-generator/).
+   - generate a new secret key using [Django Secret Key Generator](https://miniwebtool.com/django-secret-key-generator/).
    - Add the `SECRET_KEY` value to the `.env` file in the following format:
 
      ```env
@@ -105,11 +105,23 @@ Other common attack scenarios include tampering with discount codes or altering 
    python manage.py migrate
    ```
 
+1. Populate the database with dummy product data by running the following command.
+
+   ```sh
+
+   python run_db_setup.py       
+   
+
+   ```
+
 1. Create a superuser (Admin)
    ```sh
    python manage.py createsuperuser
 
    ```
+
+
+
 
 1. Run the development server
    ```sh
@@ -123,14 +135,18 @@ Other common attack scenarios include tampering with discount codes or altering 
 
    http://127.0.0.1:8000/
 
-
    ```
 
-1. Access the admin panel
+1. To view the data in the database
    ```sh
+   
+   1. Navigate to http://127.0.0.1:8000/admin
+   1. Enter your credentials e.g username and password
+   1. Click the products located in cart card and view the data created.
 
-   http://127.0.0.1:8000/admin
    ```
+
+
 
 ## To do
 - Create the necessary models and views to make it work
