@@ -97,7 +97,7 @@
 
                     <!-- image -->
                     <div class="image">
-                        <img src="{% static '/images/p1.jpg.webp' %}" alt="product image" class="cart-product-image" loading="lazy" >
+                        <img src="{% static '/images/p1.jpg' %}" alt="product image" class="cart-product-image" loading="lazy" >
                     </div>
 
                     <!-- product description -->
@@ -193,7 +193,7 @@
                 <div class="body">
 
                     <div class="image">
-                        <img src="{% static '/images/p2.jpg.webp' %}"
+                        <img src="{% static '/images/p2.jpg' %}"
                             loading="lazy" 
                             alt="UrbanFlex Classic Sneakers - White trainers with a cushioned sole"
                             class="cart-product-image">
@@ -283,7 +283,7 @@
                         <p class="padding-bottom-sm">Remove any spaces before hitting apply</p>
 
                         <div class="form-group">
-                            
+
                             <input type="text" name="apply" id="apply-input" maxlength="25">
                             <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
 
