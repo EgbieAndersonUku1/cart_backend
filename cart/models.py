@@ -16,6 +16,14 @@ class Product(models.Model):
             models.Index(fields=['name', 'price']),  # Composite index on name and price for faster lookup when combined look up
         ]
     
+    @property
+    def product_image(self):
+        return self.image.url
+    
+    @property
+    def short_description(self):
+        return f"{self.description[:95]}.."
+    
     def save(self, *args, **kwargs):
        if self.price < 0:
             self.price = abs(self.price)  

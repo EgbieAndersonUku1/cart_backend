@@ -5,7 +5,7 @@ const cartQuantityTag  = document.getElementById("cart-quantity");
 const giftInfoDiv      = document.getElementById("gift-info");
 const iconCartQuantity = document.getElementById("icon-cart-quantity");
 const saveIconQuantity = document.getElementById("save-quantity");
-
+const cards            = document.querySelector(".cards");
 
 validateElements();
 
@@ -24,6 +24,10 @@ function validateElements() {
 
     if (!checkIfHTMLElement(saveIconQuantity, "Save Quantity counter")) {
         console.error("The save counter selector couldn't be found!");
+    };
+
+    if (!checkIfHTMLElement(cards, "Card div")) {
+        console.error("The card div selector couldn't be found!");
     }
 
 }
@@ -41,6 +45,8 @@ export function modifyGridAndCenterContent() {
     cardContainer.style.gridTemplateColumns = "100%";
     cardContainer.classList.add("center");
     giftInfoDiv.classList.add("center");
+    cards.remove();
+    
 };
 
 
