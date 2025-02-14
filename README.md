@@ -13,7 +13,6 @@
 
 ---
 
-
 ## #about-the-project
 
 This project is a minimal cart system designed to handle backend interactions using JavaScript, Django and Python and how to communicate with the backend via the Fetch API. The goal for this is to focus on the core functionality of managing cart items without building a full e-commerce application, hence which is why the cart page is only built.
@@ -71,6 +70,20 @@ Other common attack scenarios include tampering with discount codes or altering 
    cd cart_backend
    ```
 
+1. Open the `settings.py` file and locate the `SECRET_KEY` variable. Cut the value of this variable.
+
+2. Create a new `.env` file in the same directory as `cart_backend`. Use the `.env-example` file as a guide.
+
+3. Open the `.env-example` file and follow these steps:
+   - Copy the `SECRET_KEY` value from `settings.py` into the `.env` file, or generate a new secret key using [Django Secret Key Generator](https://miniwebtool.com/django-secret-key-generator/).
+   - Add the `SECRET_KEY` value to the `.env` file in the following format:
+
+     ```env
+     SECRET_KEY=your-secret-key-here
+     ```
+
+4. Save the `.env` file. Ensure it is in the correct directory.
+
 
 1. Create a Virtual Environment::
    ```sh
@@ -107,7 +120,7 @@ Other common attack scenarios include tampering with discount codes or altering 
    http://127.0.0.1:8000/cart/
 
    or
-   
+
    http://127.0.0.1:8000/
 
 
@@ -116,15 +129,12 @@ Other common attack scenarios include tampering with discount codes or altering 
 1. Access the admin panel
    ```sh
 
-   Access the Admin Panel:
-
    http://127.0.0.1:8000/admin
    ```
 
 ## To do
-- Add the backend which only go to be cart related functionalities
-- Make the JS functional e.g. clicking the buttons, fetch, etc
-- Add Footer
+- Create the necessary models and views to make it work
+- Create the fetch API 
 
 
 ## Notes
