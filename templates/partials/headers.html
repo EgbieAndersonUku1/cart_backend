@@ -1,0 +1,89 @@
+{% load static %}
+
+<header>
+    <nav aria-label="Main Navigation">
+
+        <!-- Navigation Header -->
+        <hr class="nav-line" aria-hidden="true">
+
+        <div class="nav-head">
+            <div class="nav-head__head">
+                <a href="#" aria-label="Visit Create & Barrel">Create & Barrel</a>
+                <a href="#" aria-label="Visit Create & Kids">Create & Kids</a>
+                <a href="#" aria-label="Visit CB">CB</a>
+            </div>
+
+            <div class="nav-footer">
+                <p><span class="bold">Earn 10% Back in Reward Dollars</span> <a href="#">Learn more &RightArrow;</a>
+                </p>
+            </div>
+        </div>
+
+        <hr class="nav-line" aria-hidden="true">
+
+        <!-- Navigation Body -->
+        <div class="nav-body center">
+            <div class="head">
+                <label for="nav-search" class="sr-only">Search the site</label>
+                <input type="search" name="search" id="nav-search" placeholder="Enter your search..."
+                    maxlength="255">
+            </div>
+
+            <div class="body">
+                <h1 class="title kristi-regular">EU & Create</h1>
+            </div>
+
+            <div class="footer">
+                <div class="row flex-space-evenly">
+                    <a href="#" aria-label="View orders and sign in">Orders and Sign In
+                        <img src="{% static 'images/user (1).svg' %}" alt="user icon" class="nav-icon" loading="lazy" aria-hidden="true">
+                    </a>
+                    <a href="#" aria-label="View wishlist with 4 items">Wishlist
+                        <img src="{% static 'images/heart.svg' %}" alt="wishlist icon" loading="lazy" class="nav-icon" aria-hidden="true">
+                        <span class="nav-quantity wishlist-quantity">4</span>
+                    </a>
+                    <a href="#" aria-label="View cart with 1 item">Cart
+                        <img src="{% static 'images/cart.svg' %}" alt="cart icon" loading="lazy" class="nav-icon" aria-hidden="true">
+                        <span class="nav-quantity cart-quantity" id="icon-cart-quantity">0</span>
+                    </a>
+                    <a href="#" aria-label="View cart with 1 item" id="save">Save
+                        <img src="{% static 'images/save-black.svg' %}" alt="save icon" loading="lazy" class="nav-icon" aria-hidden="true">
+                        <span class="nav-quantity save-quantity" id="save-quantity">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Toolbar -->
+        <div class="nav-toolbar center">
+            <div class="nav-toolbar__row flex-space-evenly">
+                <a href="#" class="nav-toolbar-link">Wedding Registry</a>
+                <a href="#" class="nav-toolbar-link">Design Service</a>
+                <a href="#" class="nav-toolbar-link">Design Program</a>
+                <a href="#" class="nav-toolbar-link">Father's Day</a>
+                <a href="#" class="nav-toolbar-link">Mother's Day</a>
+                <a href="#" class="nav-toolbar-link">Birthday Gifts</a>
+            </div>
+        </div>
+
+        <!-- Navigation Banner -->
+        <div class="nav-banner">
+            <div class="nav-toolbar__row flex-space-evenly">
+                <a href="#" class="nav-toolbar-link">Furniture</a>
+                <a href="#" class="nav-toolbar-link">Top Shoes</a>
+                <a href="#" class="nav-toolbar-link">Items on Sale</a>
+                <a href="#" class="nav-toolbar-link">Arabian Rugs</a>
+                <a href="#" class="nav-toolbar-link">Gifts</a>
+                <a href="#" class="nav-toolbar-link">Sales</a>
+            </div>
+        </div>
+
+        <!-- Promotional Message -->
+        <div class="nav-percentage-off center">
+            <p>Get up to <span class="discount">80%</span> 60% off on your orders. Items ready to be shipped
+                immediately after order.</p>
+        </div>
+
+        <hr aria-hidden="true">
+    </nav>
+</header>
