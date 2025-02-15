@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     
     # my apps
     'cart.apps.CartConfig',
-    
-    
+       
     # django third party apps
     'django.contrib.admin',
     'django.contrib.auth',
