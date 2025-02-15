@@ -64,7 +64,7 @@
                             <img src="{% static 'images/subtract-circle-minus-remove.svg' %}" alt="Decrease quantity"
                                 data-productID="product{{product.id}}-qty"
                                 data-productName="{{ product.name | title }}"
-                                data-productDescr="{{ product.short_descripton }}"
+                                data-productDescr="{{ product.short_description }}"
                                 data-currentPrice="£{{ product.price }}"
                                 class="quantity-icon decrease-quantity clickable-icon"
                                 loading="lazy">
@@ -77,7 +77,7 @@
                             <img src="{% static 'images/plus-circle.svg' %}" alt="Increase quantity" 
                             data-productID="product{{ product.id }}-qty"
                             data-productName="{{ product.name | title }}"
-                            data-productDescr="{{ product.short_descripton }}"
+                            data-productDescr="{{ product.short_description }}"
                             data-currentPrice="£{{ product.price }}"
                             loading="lazy"
                             class="quantity-icon increase-quantity clickable-icon">
@@ -137,7 +137,7 @@
                         <div class="save-to-later box" aria-label="Save item for later">
                             <img src="{% static 'images/save.svg' %}" alt="Save icon" aria-hidden="true" class="clickable-icon save-img-icon" loading="lazy" 
                                 data-productName="{{ product.name | title }}"
-                                data-productDescr="{{ product.short_descripton }}"
+                                data-productDescr="{{ product.short_description }}"
                                 data-productID="product{{ product.id }}-qty"
                                 data-currentPrice="£{{ product.price }}"
                                 data-removeDivId="product{{ product.id }}-div">
