@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Store{% endblock title %}
+
+
+{% block body %}
+
+
+<section id="products">
+    <h1 class="center padding-bottom-sm">Step Up in Style <span><small>({{ total}})</small></span></h1>
+
+    <div class="container">
+
+        <div class="cards">
+
+            {% for product in products %}
+                <div class="store-card">
+                 
+                    <div class="head">
+                        <h3> {{ product.name }}</h3>
+
+                    </div>
+
+                    <div class="body">
+                      
+                        <img src="{{ product.product_image}}" alt="" srcset="" class="store-image" loading="lazy">
+                        <p><span class="bold">Quantity: </span> {{ product.quantity }}</p>
+                        <p><span class="bold">Price: </span> £{{ product.price }}</p>
+                    </div>
+
+                    <div class="footer">
+                        
+                        <button id="{{ product.id}}-id" class="capitalize add-to-cart" data-spinner="{{ product.id}}-spinner" data-cartImg="{{ product.id}}-cart-img"> 
+                            <span data-spinner="{{ product.id}}-spinner" class="cart-img-span">
+                                <img src="{% static 'images/cart.svg' %}" alt="icon image" id="{{ product.id}}-cart-img"
+                                    class="icon cart-image-btn " data-spinner="{{ product.id}}-spinner" data-cartImg="{{ product.id}}-cart-img">
+                            </span>
+                            <div class="spinner2" id="{{product.id}}-spinner"></div>
+                        </button>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </div>
+
+    {% include "partials/popup_message.html" %}
+</section>
+
+
+
+{% endblock body %}
+
+
+{% block script %}<script src="{% static 'js/store.js'%}" type="module" defer></script>{% endblock script %}
+

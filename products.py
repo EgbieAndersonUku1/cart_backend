@@ -36,7 +36,10 @@ def add_images_to_products(products:list, images_path:str) -> None:
         raise ValueError(f"The number of images in the media directory must equal the number of products in dictionary: Images: {EXPECTED_LENGTH}, products: {len(products)} ")
     
     for index, image in enumerate(images):
-        add_image_to_product(product=products[index], image=image, image_path=images_path)
+        try:
+            add_image_to_product(product=products[index], image=image, image_path=images_path)
+        except ValueError:
+            pass
         
 
 def add_image_to_product(product:dict, image:str, image_path:str) -> None:

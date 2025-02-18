@@ -7,6 +7,7 @@ import { modifyGridAndCenterContent,
         } from "./cart-visuals..js";
 
 import { handleSaveSidebar } from "./sidebar.js";
+import { handleDiscountForm } from "./handle-discount-form.js";
 import   getCartProductInfo from "./product.js";
 import { cardsContainer, createProductCard } from "./components.js";
 
@@ -39,7 +40,7 @@ validatePageElements();
 document.addEventListener("DOMContentLoaded", () => {handleLocalStorageLoad(PRODUCT_STORAGE_KEY);});
 window.addEventListener("beforeunload", handleBeforeUnload);
 window.addEventListener("click", handleEventDelegeation);
-
+window.addEventListener("input", handleEventDelegeation); 
 
 function handleBeforeUnload() {
   
@@ -76,10 +77,6 @@ function handleLocalStorageLoad(key) {
 
     if (!products) return;
 
-    if (!Array.isArray(products) || products.length == 0) {
-        window.location.reload();
-        return;
-    };
 
     const EXPECTED_NO_OF_KEYS = 4;
 
@@ -131,6 +128,7 @@ function handleEventDelegeation(e) {
         closeMessageIcon();
     }
     
+    handleDiscountForm(e)
     removeFromCart(e);
     handleSave(e);
     handleSaveSidebar(e);

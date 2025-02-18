@@ -23,19 +23,12 @@
     {% include 'partials/sidebar.html' %}
 
    
-    
-    <div id="popup-message">
-        <div class="message">
-
-        </div>
-
-        <div class="close-popup center">
-            <img src="{%static '/images/x-letter (1).svg' %}" alt="Message pop icon" class="icon" id="message-pop-close-icon">
-        </div>
-    </div>
-
+    {% include "partials/popup_message.html" %}
+  
 
 {% endblock body %}
+
+{% block script %}<script src="{% static 'js/cart.js'%}" type="module" defer></script>{% endblock script %}
 
 
    

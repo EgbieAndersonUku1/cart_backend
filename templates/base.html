@@ -23,8 +23,10 @@
     <!-- The footer -->
     
     {% include "partials/footer.html" %}
-    
-<script src="{% static 'js/cart.js'%}" type="module" defer></script>
+
+
+    {% block script %}{% endblock script %}
+
 </body>
 
 </html>

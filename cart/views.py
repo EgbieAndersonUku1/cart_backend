@@ -1,15 +1,19 @@
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+
 from django.shortcuts import render
 from django.db.models import Sum
 
 
-from .models import Product
+from product.models import Product
 
 # Create your views here.
 
 
 def cart(request):
-    products = Product.objects.all() 
-    total = products.aggregate(Sum("price"))["price__sum"] or 0 
+    products = None
+    # total = products.aggregate(Sum("price"))["price__sum"] or 0 
+    total = 0
     
     context = {
         "products": products,
