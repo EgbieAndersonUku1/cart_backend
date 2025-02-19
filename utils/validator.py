@@ -14,6 +14,6 @@ def validate_csrf_token(request):
     correct_token = get_token(request)
     
     if constant_time_compare(request_token, correct_token):
-        return JsonResponse({'message': 'CSRF token is valid.', 'isValid': True })
+        return JsonResponse({'message': 'CSRF token is valid.', 'isValid': True }, status=405)
     return JsonResponse({'error': 'CSRF token is invalid.', 'isValid': False}, status=403)
         

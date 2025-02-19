@@ -892,7 +892,7 @@ img:hover {
     border-radius: 5%;
     cursor: pointer;
     box-shadow: var(--box-shadow-three);
-    padding: 20px;
+    padding: 10px;
 
 }
 
@@ -904,7 +904,8 @@ img:hover {
 
 
 .store-card .body {
-    text-align: left;
+    text-align: center;
+    font-weight: 400;
 }
 
 .store-card h3 {
@@ -939,4 +940,10 @@ img:hover {
 .cart-img-span {
     display: flex;
     justify-content: center;
+}
+
+.product-description {
+    padding-top: var(--padding-md);
+    padding-bottom: var(--padding-md);
+    font-size: 0.95rem;
 }
