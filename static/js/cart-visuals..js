@@ -59,7 +59,7 @@ export function updateCartQuantityTag(priceElementsArray) {
     try {
         const numOfCartItems         = priceElementsArray.length;
         cartQuantityTag.textContent  = (numOfCartItems);
-        iconCartQuantity.textContent = numOfCartItems;
+        setCartNavIconQuantity(numOfCartItems);
     
         showPopup(iconCartQuantity);
 
@@ -67,6 +67,10 @@ export function updateCartQuantityTag(priceElementsArray) {
         console.error(`The price element array is invalid: ${priceElementsArray}`)
     }
    
+};
+
+export function setCartNavIconQuantity(amount) {
+    iconCartQuantity.textContent = amount;
 }
 
 

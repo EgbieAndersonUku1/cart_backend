@@ -1,16 +1,15 @@
 import fetchData from "./fetch.js";
-import {checkIfHTMLElement, displaySpinnerFor,  } from "./utils.js";
+import {checkIfHTMLElement, displaySpinnerFor, toggleSpinner } from "./utils.js";
+import { setCartNavIconQuantity } from "./cart-visuals..js";
 import { showPopupMessage } from "./messages.js";
 
 const productSection = document.getElementById("products");
-
+const CSRF_TOKEN     = document.querySelector("input[name='csrfmiddlewaretoken'").value;
 
 validatePageElements();
 
 
 productSection.addEventListener("click", handleProductDelegation);
-
-
 
 
 function handleProductDelegation(e) {
@@ -19,20 +18,22 @@ function handleProductDelegation(e) {
 }
 
 
+async function handleCartButtonClick(e) {
+    const element   = e.target;
+    const classList = element.classList;
 
-function handleCartButtonClick(e) {
-    const element  = e.target;
-    const classList = element.classList
-   
-    const isValid = (element.tagName === "BUTTON" && classList.contains("add-to-cart")) || (element.tagName === "IMG" && classList.contains("cart-image-btn"));
-  
+    const isValid = (element.tagName === "IMG" && classList.contains("cart-image-btn")) || (element.tagName === "SPAN" && classList.contains("cart-img-span"));
+    
     if (isValid) {
        
-        const spinnerID = e.target.dataset.spinner;
-        const spinner = document.getElementById((spinnerID));
-        const cartImgIconID = e.target.dataset.cartimg;
-        const cartImg = document.getElementById(cartImgIconID);
+        //  ensure that button element is retrieved
+        const productElement = e.target.closest("BUTTON");
+        const spinnerID      = productElement.dataset.spinner;
 
+        const spinner        = document.getElementById((spinnerID));
+        const cartImgIconID  = productElement.dataset.cartimg;
+        const cartImg        = document.getElementById(cartImgIconID);
+     
         if (!checkIfHTMLElement(spinner, "cart spinner with id ")) {
             return;
         };
@@ -40,6 +41,22 @@ function handleCartButtonClick(e) {
         if (!checkIfHTMLElement(cartImg, "cart image ")) {
             return;
         };
+
+        toggleSpinner(spinner, true);
+
+        try {
+            const responseData = await sendProdutDataToBackend(productElement);
+            console.log(responseData)
+            if (responseData.isSuccess) {
+                setCartNavIconQuantity(responseData.NUM_OF_ITEMS_IN_CART);
+            }
+          
+          toggleSpinner(spinner, false);
+        } catch (error) {
+            toggleSpinner(spinner, false);
+        };
+
+        
 
         const TIME_IN_MS      = 500;
         cartImg.style.display = "none";
@@ -55,6 +72,26 @@ function handleCartButtonClick(e) {
         
       
     } 
+}
+
+
+
+async function sendProdutDataToBackend(element) {
+
+    const product = element.dataset;
+    const url     = "store/basket/add/";
+
+    const productObj = {
+       
+        productID:product.productid,
+        name:product.name,
+        description:product.description,
+        price:product.price,
+        stock:parseInt(product.stock),
+        productImage:product.productimage,   
+    }
+    return await fetchData({url: url, csrfToken: CSRF_TOKEN, body: productObj, method: "POST" })
+  
 }
 
 

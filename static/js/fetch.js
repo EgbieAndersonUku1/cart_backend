@@ -40,7 +40,7 @@ export default async function fetchData({ url, csrfToken = null, body = null, me
 
     } catch (error) {
 
-        console.error("Fetch error:", error);
+        console.error("Fetch error: " + error.message);
         return null;
     }
 }

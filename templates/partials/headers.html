@@ -45,7 +45,7 @@
                     </a>
                     <a href="#" aria-label="View cart with 1 item">Cart
                         <img src="{% static 'images/cart.svg' %}" alt="cart icon" loading="lazy" class="nav-icon" aria-hidden="true">
-                        <span class="nav-quantity cart-quantity" id="icon-cart-quantity">0</span>
+                        <span class="nav-quantity cart-quantity" id="icon-cart-quantity">{{ cart_total }}</span>
                     </a>
                     <a href="#" aria-label="View cart with 1 item" id="save">Save
                         <img src="{% static 'images/save-black.svg' %}" alt="save icon" loading="lazy" class="nav-icon" aria-hidden="true">

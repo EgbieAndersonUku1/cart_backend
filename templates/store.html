@@ -14,6 +14,9 @@
 
         <div class="cards">
 
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+
             {% for product in products %}
                 <div class="store-card">
                  
@@ -33,10 +36,19 @@
 
                     <div class="footer">
                         
-                        <button id="{{ product.id}}-id" class="capitalize add-to-cart" data-spinner="{{ product.id}}-spinner" data-cartImg="{{ product.id}}-cart-img"> 
+                        <button id="{{ product.id}}-id" class="capitalize add-to-cart" 
+                                     data-spinner="{{ product.id}}-spinner" 
+                                     data-cartImg="{{ product.id}}-cart-img"
+                                     data-productid="{{ product.id }}" 
+                                     data-name="{{ product.name }}" 
+                                     data-description="{{ product.short_description }}" 
+                                     data-stock="{{ product.quantity }}" 
+                                     data-price="{{ product.price }}" 
+                                     data-productImage="{{ product.product_image }}"
+                                     > 
                             <span data-spinner="{{ product.id}}-spinner" class="cart-img-span">
                                 <img src="{% static 'images/cart.svg' %}" alt="icon image" id="{{ product.id}}-cart-img"
-                                    class="icon cart-image-btn " data-spinner="{{ product.id}}-spinner" data-cartImg="{{ product.id}}-cart-img">
+                                    class="icon cart-image-btn" data-spinner="{{ product.id}}-spinner">
                             </span>
                             <div class="spinner2" id="{{product.id}}-spinner"></div>
                         </button>
