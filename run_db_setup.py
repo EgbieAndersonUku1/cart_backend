@@ -30,7 +30,7 @@ django.setup()
 
 from django.conf import settings
 
-from cart.models import Product, Discount
+from product.models import Product, Discount
 from utils.discount import create_discount_code
 
 

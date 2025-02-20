@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     
     # my apps
     'cart.apps.CartConfig',
+    'store.apps.StoreConfig',
+    'product.apps.ProductConfig',
        
     # django third party apps
     'django.contrib.admin',
@@ -75,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'utils.context_processors.update_cart_qty',
+                
             ],
         },
     },

@@ -11,7 +11,6 @@
 - [notes](#notes)
 
 
----
 
 ## #about-the-project
 
@@ -46,6 +45,7 @@ Other common attack scenarios include tampering with discount codes or altering 
 - **`backend with django`** No login, registration, etc only the cart related functionalities will be added.
 
 
+
 ## Technologies Used
 
 - **Django**: Web framework
@@ -54,23 +54,21 @@ Other common attack scenarios include tampering with discount codes or altering 
 - **HTML, CSS, JavaScript**: Frontend
 
 
-## Setup Instructions
+### **Python Requirement**
 
-### Prerequisites
+This project uses **Python 3.12.6** which is the latest version at the time of development, however future version to Python may introduce changes that could break this application since some of the libraries might no longer be compatible. To avoid compatibility issues, ensure that you are using **Python 3.12.6** when working on this project.
 
-1. Install Python (version 3.8 or higher)
-2. Install pip (Python package manager)
-3. Install a virtual environment manager (optional but recommended)
 
-## Installation & Usage
+To check your python version, you can do using `python --version` 
+
+
+## **Prerequisites**
 
 1. Clone the repository:
    ```sh
    git clone https://github.com/EgbieAndersonUku1/cart_backend.git .
    cd cart_backend
    ```
-
-1. Open the `settings.py` file and locate the `SECRET_KEY` variable. Cut the value of this variable.
 
 2. Create a new `.env` file in the same directory as `cart_backend`. Use the `.env-example` file as a guide.
 
@@ -83,6 +81,7 @@ Other common attack scenarios include tampering with discount codes or altering 
      ```
 
 4. Save the `.env` file. Ensure it is in the correct directory.
+
 
 
 1. Create a Virtual Environment::
@@ -121,15 +120,13 @@ Other common attack scenarios include tampering with discount codes or altering 
    ```
 
 
-
-
 1. Run the development server
    ```sh
    python manage.py runserver
 
    Open your browser and visit:
 
-   http://127.0.0.1:8000/cart/
+   http://127.0.0.1:8000/cart_backend/
 
    or
 

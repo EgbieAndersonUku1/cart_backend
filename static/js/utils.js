@@ -48,6 +48,16 @@ export function toggleSpinner(spinnerElement, show=true) {
 }
 
 
+
+export function displaySpinnerFor(spinnerElement, timeToDisplay=500) {
+    toggleSpinner(spinnerElement)
+
+    setTimeout(() => {
+        toggleSpinner(spinnerElement, false)
+    }, timeToDisplay)
+}
+
+
 export function showPopup(element, duration=500) {
     element.classList.add("popup");
 
