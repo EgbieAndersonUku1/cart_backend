@@ -32,7 +32,6 @@ class Product(models.Model):
     @property
     def short_description(self):
         """Returns the shorter version of the full product description"""
-        
         return f"{self.description[:95]}.."
     
     def save(self, *args, **kwargs):
@@ -157,3 +156,47 @@ class Discount(models.Model):
             self.end_date = make_aware(self.end_date)
        
         super().save(*args, **kwargs)
+
+
+class ProductDTO:
+    """
+    A Data Transfer Object (DTO) for representing product information.
+
+    Attributes:
+        id (int): The unique identifier for the product.
+        name (str): The name of the product.
+        description (str): A brief description of the product.
+        price (float): The price of the product.
+        current_stock (int): The number of units available in stock.
+        image (str): The URL or path to the product image.
+        qty (int): The quantity of the product selected or added to the cart.
+
+    Properties:
+        is_in_stock (bool): Returns True if the product is in stock, otherwise False.
+    """
+    def __init__(self, id, name, description, price, current_stock, image, qty):
+        self.id                = id
+        self.name              = name
+        self.description       = description
+        self.price             = price
+        self.current_stock     = current_stock
+        self.image             = image
+        self.qty               = qty
+    
+    @property
+    def is_in_stock(self):
+        """Returns True if the item is in stock or false otherwise"""
+        return self.current_stock > 0
+    
+    def to_json(self):
+        """
+        Transforms a  the productDTO to a dictionary (or JSON) .
+        """
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "price": self.price,
+            "current_stock" : self.current_stock,
+            "qty": self.qty,
+        }

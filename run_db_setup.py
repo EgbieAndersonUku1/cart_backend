@@ -2,6 +2,7 @@
 import django
 import logging
 
+
 from os import environ, mkdir
 from datetime import timedelta, datetime
 from os.path import join, exists, abspath, dirname
@@ -29,7 +30,7 @@ environ.setdefault('DJANGO_SETTINGS_MODULE', 'cart_backend.settings')
 django.setup()
 
 from django.conf import settings
-
+from django.contrib.sessions.models import Session
 from product.models import Product, Discount
 from utils.discount import create_discount_code
 
@@ -161,3 +162,8 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
     main()
+    
+    print("[*] Deleting all sessions, please wait...")
+    Session.objects.all().delete()
+    print("[+] Done")
+    

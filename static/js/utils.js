@@ -76,3 +76,33 @@ export function findProductByIndex(products, selectorID) {
 export function toggleScrolling(disable) {
     document.body.style.overflow = disable ? "hidden" : "auto";
 }
+
+
+export function extractCurrencyAndValue(priceStr) {
+    const currencySymbol = priceStr.charAt(0);  
+    const numericValue   = priceStr.slice(1);  
+    const currentPrice = parseFloat(numericValue, 10) || 0;  
+
+    return {
+        currency: currencySymbol,
+        amount: currentPrice
+    };
+}
+
+
+/**
+ * Shows the spinner for a specified duration and then hides it.
+ * 
+ * This function uses the `toggleSpinner` function to show the spinner immediately,
+ * and then hides it after the specified amount of time (default is 500ms).
+ * 
+ * @param {HTMLElement} spinnerElement - The spinner element to display.
+ * @param {number} [timeToDisplay=500] - The duration (in milliseconds) to display the spinner. Defaults to 500ms.
+ */
+export function showSpinnerFor(spinnerElement, timeToDisplay = 500) {
+    toggleSpinner(spinnerElement); 
+
+    setTimeout(() => {
+        toggleSpinner(spinnerElement, false);  
+    }, timeToDisplay);
+}

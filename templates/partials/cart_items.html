@@ -55,8 +55,9 @@
                         <!-- product name -->
                         <div class="product-name">
                             <h1 id="product1" class="green capitalize">{{ product.name }}</h1>
-                            <small><span class="upperCase bold">sku:</span> BTESSWEFSXEE-{{ product.id }}-{{
-                                product.quantity }}</small>
+                            <small><span class="upperCase bold">sku:</span> BTESSWEFSXEE-{{ product.id }}</small>
+
+                               
                         </div>
 
                         <!-- quantity -->
@@ -66,19 +67,20 @@
                                 <img src="{% static 'images/subtract-circle-minus-remove.svg' %}"
                                     alt="Decrease quantity" data-productID="product{{product.id}}-qty"
                                     data-productName="{{ product.name | title }}"
-                                    data-productDescr="{{ product.short_description }}"
+                                    data-productDescr="{{ product.description }}"
                                     data-currentPrice="£{{ product.price }}"
                                     class="quantity-icon decrease-quantity clickable-icon" loading="lazy">
 
                             </div>
-                            <div class="number box bold" aria-live="polite" id="product{{ product.id }}-qty">1</div>
-
+                        
+                            <div class="number box bold" aria-live="polite" id="product{{ product.id }}-qty">{{ product.qty }}</div>
+                           
                             <div class="increase box" role="button" aria-label="Increase quantity" tabindex="0">
 
                                 <img src="{% static 'images/plus-circle.svg' %}" alt="Increase quantity"
                                     data-productID="product{{ product.id }}-qty"
                                     data-productName="{{ product.name | title }}"
-                                    data-productDescr="{{ product.short_description }}"
+                                    data-productDescr="{{ product.description }}"
                                     data-currentPrice="£{{ product.price }}" loading="lazy"
                                     class="quantity-icon increase-quantity clickable-icon">
                             </div>
@@ -104,13 +106,13 @@
 
                         <!-- image -->
                         <div class="image">
-                            <img src="{{ product.product_image }}" alt="product image" class="cart-product-image"
+                            <img src="{{ product.image }}" alt="product image" class="cart-product-image"
                                 loading="lazy">
                         </div>
 
                         <!-- product description -->
                         <div class="product-description">
-                            <p class="product-name small-heading">PureStride White Trainers</p>
+                            <p class="product-name small-heading">{{ product.name | title }} </p>
 
                             <p class="padding-top">
                                 {{ product.description }}
@@ -125,9 +127,10 @@
                                         ship</span>
                                 </p>
                             </div>
-                            <p><span class="bold">Quantity:</span> {{ product.quantity }}</p>
+                            <p><span class="bold">Quantity:</span> {{ product.current_stock }}</p>
                             <p><span class="bold">Shipping:</span> Standard</p>
                             <p><span class="bold">Arrival:</span> Arrives in 6 to 7 working days</p>
+                            <p><span class="bold">In stock:</span> {{ product.is_in_stock }}</p>
 
                         </div>
 
@@ -143,7 +146,7 @@
                                 <img src="{% static 'images/save.svg' %}" alt="Save icon" aria-hidden="true"
                                     class="clickable-icon save-img-icon" loading="lazy"
                                     data-productName="{{ product.name | title }}"
-                                    data-productDescr="{{ product.short_description }}"
+                                    data-productDescr="{{ product.description }}"
                                     data-productID="product{{ product.id }}-qty"
                                     data-currentPrice="£{{ product.price }}"
                                     data-removeDivId="product{{ product.id }}-div">
@@ -170,7 +173,7 @@
                     Summary </h1>
                 <dl class="cost-breakdown">
                     <dt>Mechanise</dt>
-                    <dd class="price" id="price-total">£{{ total }}</dd>
+                    <dd class="price" id="price-total">£0.00 </dd>
                 </dl>
 
                 <dl class="cost-breakdown">
@@ -202,7 +205,7 @@
                 <hr class="dividor">
 
                 <div class="apply-form">
-                    <form action="" method="post" id="discount-apply-form">
+                    <form action="" method="post" id="apply-form">
 
                         <label for="apply-input" class="apply-promotion capitalize bold padding-bottom-sm">
                             Apply a promotion code
@@ -210,14 +213,11 @@
                         <p class="padding-bottom-sm">Remove any spaces before hitting apply</p>
 
                         <div class="form-group">
-
-                            <input type="text" name="apply" id="apply-input" maxlength="23" placeholder="discount code">
-                            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-
-
-                            <button type="button" class="upperCase">Apply</button>
+                            <input type="text" name="discountCode" id="apply-input" maxlength="23" placeholder="discount code">
+                            
+                            <button type="button" class="upperCase" id="apply-btn">Apply</button>
                         </div>
-
+                      
                     </form>
                 </div>
 

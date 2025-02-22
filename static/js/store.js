@@ -1,5 +1,5 @@
 import fetchData from "./fetch.js";
-import {checkIfHTMLElement, displaySpinnerFor, toggleSpinner } from "./utils.js";
+import {checkIfHTMLElement, displaySpinnerFor} from "./utils.js";
 import { setCartNavIconQuantity } from "./cart-visuals..js";
 import { showPopupMessage } from "./messages.js";
 
@@ -42,32 +42,30 @@ async function handleCartButtonClick(e) {
             return;
         };
 
-        toggleSpinner(spinner, true);
+        productElement.disabled = true;
+        
+        displaySpinnerFor(spinner);
 
         try {
-            const responseData = await sendProdutDataToBackend(productElement);
-            console.log(responseData)
+            const responseData    = await sendProdutDataToBackend(productElement);
+            cartImg.style.display = "none";
+          
             if (responseData.isSuccess) {
                 setCartNavIconQuantity(responseData.NUM_OF_ITEMS_IN_CART);
             }
           
-          toggleSpinner(spinner, false);
         } catch (error) {
-            toggleSpinner(spinner, false);
+            console.error(error.message);
         };
 
-        
-
-        const TIME_IN_MS      = 500;
-        cartImg.style.display = "none";
-        const id              = cartImgIconID.split("-")[0]
-
-        displaySpinnerFor(spinner);
-
+        const id         = cartImgIconID.split("-")[0]
+        const TIME_IN_MS = 500;
+    
         setTimeout(() => {
             cartImg.style.display = "flex";
             cartImg.classList.add("center");
             showPopupMessage(`Added product with id ${id} to cart`);
+            productElement.disabled = false;
         }, TIME_IN_MS);
         
       
@@ -93,21 +91,6 @@ async function sendProdutDataToBackend(element) {
     return await fetchData({url: url, csrfToken: CSRF_TOKEN, body: productObj, method: "POST" })
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
