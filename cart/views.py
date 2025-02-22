@@ -6,17 +6,18 @@ from django.db.models import Sum
 
 
 from product.models import Product
+from product.views_helper import CartRequestSession
 
 # Create your views here.
 
 
 def cart(request):
-    products = None
-    # total = products.aggregate(Sum("price"))["price__sum"] or 0 
-    total = 0
     
+    
+    cart     = CartRequestSession(request)  
+    products = cart.get_products_from_request(to_class_object=True)
+   
     context = {
         "products": products,
-        "total": total
     }
     return render(request, "cart.html", context=context)

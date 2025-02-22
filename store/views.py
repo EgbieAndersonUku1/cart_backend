@@ -19,7 +19,7 @@ def home(request):
 
     csrf_token = get_token(request)
     cart       = CartRequestSession(request)
-    
+        
     # Store the CSRF token inside the guest session because, as a guest, there is no authentication. 
     # Without this, each call to `get_token(request)` generates a new CSRF token, instead of reusing 
     # the one sent to the frontend from the backend, this means that CSRF_TOKEN will never match.
@@ -39,7 +39,7 @@ def home(request):
 def add_to_basket(request):
     
     if request.method != "POST":
-        return JsonResponse({'ERROR': 'Only a POST response is allowed', 'isSuccess': False, 'MESSAGE': ''}, status=405)
+        return _create_json(error='Only a POST response is allowed', status_code=405)
 
     response  = validate_csrf_token(request)
     cart      = CartRequestSession(request)
@@ -48,7 +48,7 @@ def add_to_basket(request):
         
         FORBIDDEN_CODE = 403
         
-        return _create_json(cart, 
+        return _create_json(cart=cart, 
                             status_code=FORBIDDEN_CODE, 
                             error=response.get("error", ""), 
                             message=response.get("error", ""), 
@@ -59,21 +59,21 @@ def add_to_basket(request):
 
     if not product_data:
         
-        error = 'Something went wrong and no product data was received'
+        error = 'Something went wrong and no product data was not received'
         return _create_json(error=error, cart=cart, status_code=405)
        
     try:
         cart.add_to_session(product_data)
         
     except KeyError as error:
-        return _create_json(cart, error=error, status_code=405)
+        return _create_json(cart=cart, error=error, status_code=405)
      
     except ValueError as error:
-        return _create_json(cart, error=error, status_code=405)
-    return _create_json(cart, message='Added product to cart request session', is_success=True, status_code=200)
+        return _create_json(cart=cart, error=error, status_code=405)
+    return _create_json(cart=cart, message='Added product to cart request session', is_success=True, status_code=200)
   
         
-def _create_json(cart, status_code, error='', is_success=False, message=''):
+def _create_json(status_code, error='', is_success=False, message='', cart=None):
     return JsonResponse({'ERROR': error, 
                          'isSuccess': is_success, 
                          'MESSAGE': message, 

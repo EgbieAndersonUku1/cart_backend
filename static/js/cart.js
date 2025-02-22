@@ -1,20 +1,19 @@
-import { getLocalStorage, updateProductInLocalStorage  } from "./db.js";
-import { closeMessageIcon, showPopupMessage } from "./messages.js";
+import { showPopupMessage } from "./messages.js";
 import { modifyGridAndCenterContent, 
          updateCartQuantityTag, 
-         updateCartQuantityDisplay, 
          updateSaveIconQuantity,
         } from "./cart-visuals..js";
 
 import { handleSaveSidebar } from "./sidebar.js";
-import { handleDiscountForm } from "./handle-discount-form.js";
 import   getCartProductInfo from "./product.js";
 import { cardsContainer, createProductCard } from "./components.js";
+import { applyDashToInput, discountManager, extractDiscountCodeFromForm } from "./handle-discount-form.js";
 
 import { checkIfHTMLElement,
         concatenateWithDelimiter,
         showPopup, 
         toggleSpinner,
+        extractCurrencyAndValue,
         } from "./utils.js";
 
 
@@ -24,87 +23,35 @@ const priceTax            = document.getElementById("price-tax");
 const priceTotal          = document.getElementById("price-total");
 const shippingAndHandling = document.getElementById("shipping-and-handling");
 const spinner             = document.getElementById("spinner");
+const discountForm        = document.getElementById("apply-form");
+const discountInputField  = document.getElementById("apply-input");
 
 
 let   priceElementsArray  = Array.from(document.querySelectorAll(".product-price"));
-
-const PRODUCT_STORAGE_KEY = "products";
-
 
 
 validatePageElements();
 
 
 
-// EventListeners
-document.addEventListener("DOMContentLoaded", () => {handleLocalStorageLoad(PRODUCT_STORAGE_KEY);});
-window.addEventListener("beforeunload", handleBeforeUnload);
-window.addEventListener("click", handleEventDelegeation);
-window.addEventListener("input", handleEventDelegeation); 
-
-function handleBeforeUnload() {
-  
-    try {
-        const actionType      = ".increase-quantity";
-        const productElements = Array.from(document.querySelectorAll(actionType));
-
-        if (!Array.isArray(productElements) || productElements.length < 1) return;
-
-        productElements.forEach((productElement) => {
-            const productId  = productElement.dataset.productid;
-            const productInfo = getCartProductInfo(productElement);
-
-            if (!productInfo) {
-                console.warn("The product info wasn't found");
-                return;
-            };
-
-            updateProductInLocalStorage(PRODUCT_STORAGE_KEY, productInfo, productId);
-           
-        } );
-
-    } catch (error) {
-        console.error("Unexpected error in handleBeforeUnload:", error);   
-
-    };
-       
+/**
+ * Initializes the cart page by updating the product array
+ * and displaying the cart summary when the user navigates to the page.
+ */
+const cartPageLoader = {
+    init: () => {
+        updateProductArray();
+        updateCartSummary();
+        updateCartQuantityTag(priceElementsArray);
+    }
 };
 
-
-function handleLocalStorageLoad(key) {
-
-    const products = getLocalStorage(key);
-
-    if (!products) return;
+cartPageLoader.init();
 
 
-    const EXPECTED_NO_OF_KEYS = 4;
-
-    products.forEach((product) => {
-
-        const productKeys = Object.keys(product);
-
-        if ( productKeys < EXPECTED_NO_OF_KEYS) {
-            console.warn(`There is ${ EXPECTED_NO_OF_KEYS - productKeys} keys missing from the product object.`);
-        } else {
-           
-           // try to update the counter variable first - if the fails don't bother updating the product variabes
-            const isSuccess = updateCartQuantityDisplay(product.selectorID, product.currentQty);
-      
-            if (isSuccess) {
-
-                updateCartPrice(product.productIDName, product.currentQty, product.currentPrice);
-                updateCartSummary();
-                updateCartQuantityTag(priceElementsArray);
-               
-            } else {
-                console.warn(`Missing selector or invalid selector for product: ${product.selectorID}`);
-            }
-        
-        }
-    })
-   
-}
+// EventListeners
+window.addEventListener("click", handleEventDelegeation);
+window.addEventListener("input", handleEventDelegeation); 
 
 
 /**
@@ -115,8 +62,11 @@ function handleEventDelegeation(e) {
 
     const classList          = e.target.classList;
     const actionType         = classList.contains("increase-quantity") ? "increase-quantity": classList.contains("decrease-quantity") ? "decrease-quantity": null;
-    const messageCloseIconID = e.target.id;
+    const discountInputID    = "apply-input";
+    const discountInputIDBtn = "apply-btn";
     
+    console.log(e.target.tagName)
+
     // Ensures that `showPopup` is only triggered when the `plus` or `minus` button
     //  is clicked, not when other elements (e.g., a link) are clicked.
     if (actionType) {
@@ -124,11 +74,20 @@ function handleEventDelegeation(e) {
         updateCartQuantity(e, actionType);  
     }
 
-    if (e.target.id === messageCloseIconID) {
-        closeMessageIcon();
-    }
     
-    handleDiscountForm(e)
+    if (e.target.id === discountInputID) {
+        applyDashToInput(e)
+    };
+
+    if (e.target.id === discountInputIDBtn) {
+       
+        const code      = extractDiscountCodeFromForm(discountForm);
+        const isSuccess = discountManager.applyDiscount(code);
+ 
+        if (isSuccess) {
+             discountInputField.value = "";
+        }
+     }
     removeFromCart(e);
     handleSave(e);
     handleSaveSidebar(e);
@@ -201,23 +160,30 @@ function updateCartSummary() {
     };
 
     let total = 0;
-    let sign  = null;
+    let sign  = "£";  // default
 
     priceElementsArray.forEach((priceElement) => {
-        
+
+        const priceData = extractCurrencyAndValue(priceElement.textContent);
         if (!sign) {
-            sign = priceElement.textContent.charAt(0);
+            sign = priceData.currency;
         }
-        const priceStr = priceElement.textContent.slice(1);
-        const value    = isNaN(parseFloat(priceStr)) ? 0 : parseFloat(priceStr);
-        total += value;
+       
+        total += priceData.amount;
     })
 
-    const tax              = parseFloat(priceTax.textContent.slice(1));
-    const shippingCost     = parseFloat(shippingAndHandling.textContent.slice(1)); 
+    const tax              = extractCurrencyAndValue(priceTax.textContent).amount;
+    const shippingCost     = extractCurrencyAndValue(shippingAndHandling.textContent).amount; 
 
     priceTotal.textContent = concatenateWithDelimiter(sign, total);
-    orderTotal.textContent = concatenateWithDelimiter(sign, (total + tax + shippingCost));
+
+    const totalOrderCost   = (total + tax + shippingCost);
+    orderTotal.textContent = concatenateWithDelimiter(sign, totalOrderCost);
+
+    if (discountManager.isDiscountApplied()) {
+        const discountCode = discountManager.getCurrentAppliedDiscountCode();
+        discountManager.applyDiscount(discountCode, true);
+    };
 
     const elements = [priceTotal, orderTotal];
 
@@ -252,16 +218,12 @@ function updateCartPrice(productName, quantity, currentPriceStr) {
         return;
     };
 
-    const sign  = currentPriceStr.charAt(0)
-    const value = currentPriceStr.slice(1)
-
-    let currentPrice = parseInt(value, 10) || 0;
-    const newPrice   = currentPrice * quantity
+    const priceData = extractCurrencyAndValue(currentPriceStr);
+    const newPrice  = priceData.amount * quantity
     
-    currentPriceElement.textContent = concatenateWithDelimiter(sign, newPrice.toString());
+    currentPriceElement.textContent = concatenateWithDelimiter(priceData.currency, newPrice.toString());
     updateCartQuantityTag(priceElementsArray);
     updateCartSummary();
-
 }
 
 
@@ -338,6 +300,7 @@ function removeCardSummary() {
 function updateProductArray() {
     priceElementsArray = Array.from(document.querySelectorAll(".product-price"));
 }
+
 
 
 
