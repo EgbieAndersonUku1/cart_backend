@@ -13,7 +13,6 @@ from product.views_helper import CartRequestSession
 
 def cart(request):
     
-    
     cart     = CartRequestSession(request)  
     products = cart.get_products_from_request(to_class_object=True)
    

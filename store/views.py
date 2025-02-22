@@ -1,13 +1,12 @@
-import json
-
-from django.http import JsonResponse
 from django.shortcuts import render
 from django.middleware.csrf import get_token
 
 from product.models import Product
-from utils.validator import validate_csrf_token
 
 from product.views_helper import CartRequestSession
+from store.views_helper import handle_csrf_validation, create_json, get_product_data_from_request
+
+
 # Create your views here.
 
 def home(request):
@@ -39,46 +38,45 @@ def home(request):
 def add_to_basket(request):
     
     if request.method != "POST":
-        return _create_json(error='Only a POST response is allowed', status_code=405)
-
-    response  = validate_csrf_token(request)
-    cart      = CartRequestSession(request)
+        return create_json(error='Only a POST response is allowed', status_code=405)
    
-    if response.get("error"):
-        
-        FORBIDDEN_CODE = 403
-        
-        return _create_json(cart=cart, 
-                            status_code=FORBIDDEN_CODE, 
-                            error=response.get("error", ""), 
-                            message=response.get("error", ""), 
-                            is_success=response.get("is_valid", False),
-                            )
-          
-    product_data = json.loads(request.body.decode("utf-8"))
+    cart      = CartRequestSession(request)
+    response  = handle_csrf_validation(request, cart)
+    
+    if response is not None:
+        return response
+                 
+    is_success, product_data, json_data = get_product_data_from_request(request, cart)
 
-    if not product_data:
-        
-        error = 'Something went wrong and no product data was not received'
-        return _create_json(error=error, cart=cart, status_code=405)
+    if is_success == False and json_data.get("error"):
+        return json_data
        
     try:
         cart.add_to_session(product_data)
-        
     except KeyError as error:
-        return _create_json(cart=cart, error=error, status_code=405)
-     
+        return create_json(cart=cart, error=error, status_code=405)
     except ValueError as error:
-        return _create_json(cart=cart, error=error, status_code=405)
-    return _create_json(cart=cart, message='Added product to cart request session', is_success=True, status_code=200)
+        return create_json(cart=cart, error=error, status_code=405)
+    return create_json(cart=cart, message='Added product to cart request session', is_success=True, status_code=200)
   
-        
-def _create_json(status_code, error='', is_success=False, message='', cart=None):
-    return JsonResponse({'ERROR': error, 
-                         'isSuccess': is_success, 
-                         'MESSAGE': message, 
-                         'NUM_OF_ITEMS_IN_CART': cart.number_of_items_in_cart_session
-                         },
-                          status=status_code,
-                         )
+
+
+def remove_from_basket(request):
     
+    if request.method != "POST":
+        return create_json(error='Only a POST response is allowed', status_code=405)
+    
+    cart      = CartRequestSession(request)
+    response  = handle_csrf_validation(request, cart)
+    
+    if response is not None:
+        return response
+    
+    is_success, product_data, json_data = get_product_data_from_request(request, cart)
+    
+    if is_success == False and json_data.get("error"):
+        return json_data
+    
+    cart.remove_from_session(product_data)
+    
+    return create_json(cart=cart, message='Added product to cart request session', is_success=True, status_code=200)

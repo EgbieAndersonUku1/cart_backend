@@ -190,7 +190,7 @@ class ProductDTO:
     
     def to_json(self):
         """
-        Transforms a  the productDTO to a dictionary (or JSON) .
+        Transforms a productDTO to a dictionary (or JSON) .
         """
         return {
             "id": self.id,

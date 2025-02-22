@@ -1,5 +1,5 @@
 import fetchData from "./fetch.js";
-import {checkIfHTMLElement, displaySpinnerFor} from "./utils.js";
+import {checkIfHTMLElement, displaySpinnerFor, parser} from "./utils.js";
 import { setCartNavIconQuantity } from "./cart-visuals..js";
 import { showPopupMessage } from "./messages.js";
 
@@ -8,13 +8,21 @@ const CSRF_TOKEN     = document.querySelector("input[name='csrfmiddlewaretoken'"
 
 validatePageElements();
 
-
+let debounceTimer;
+const TIME_IN_MS = 500;
+    
 productSection.addEventListener("click", handleProductDelegation);
 
 
 function handleProductDelegation(e) {
     // console.log(e.target);
-    handleCartButtonClick(e)
+    clearTimeout(debounceTimer);
+
+    debounceTimer = setTimeout(() => {
+        handleCartButtonClick(e);
+    }, TIME_IN_MS);
+  
+    
 }
 
 
@@ -22,7 +30,10 @@ async function handleCartButtonClick(e) {
     const element   = e.target;
     const classList = element.classList;
 
-    const isValid = (element.tagName === "IMG" && classList.contains("cart-image-btn")) || (element.tagName === "SPAN" && classList.contains("cart-img-span"));
+    console.log(e.target.id);
+
+    const isValid = (element.tagName === "IMG" && classList.contains("cart-image-btn")) 
+                                            || (element.tagName === "SPAN" && classList.contains("cart-img-span"));
     
     if (isValid) {
        
@@ -34,20 +45,21 @@ async function handleCartButtonClick(e) {
         const cartImgIconID  = productElement.dataset.cartimg;
         const cartImg        = document.getElementById(cartImgIconID);
      
-        if (!checkIfHTMLElement(spinner, "cart spinner with id ")) {
-            return;
-        };
-
-        if (!checkIfHTMLElement(cartImg, "cart image ")) {
-            return;
-        };
+        if (!checkIfHTMLElement(spinner, "cart spinner with id ")) return;
+        if (!checkIfHTMLElement(cartImg, "cart image ")) return;
 
         productElement.disabled = true;
         
         displaySpinnerFor(spinner);
 
+        parser.setElementToParser(productElement);
+           
+        const product = parser.getProductDataToAdd();
+        const url     = "store/basket/add/";
+
         try {
-            const responseData    = await sendProdutDataToBackend(productElement);
+
+            const responseData    = await sendProdutDataToBackend(url, product);
             cartImg.style.display = "none";
           
             if (responseData.isSuccess) {
@@ -58,9 +70,8 @@ async function handleCartButtonClick(e) {
             console.error(error.message);
         };
 
-        const id         = cartImgIconID.split("-")[0]
-        const TIME_IN_MS = 500;
-    
+        const id  = cartImgIconID.split("-")[0];
+
         setTimeout(() => {
             cartImg.style.display = "flex";
             cartImg.classList.add("center");
@@ -74,23 +85,15 @@ async function handleCartButtonClick(e) {
 
 
 
-async function sendProdutDataToBackend(element) {
+async function sendProdutDataToBackend(url, productObj) {
 
-    const product = element.dataset;
-    const url     = "store/basket/add/";
-
-    const productObj = {
-       
-        productID:product.productid,
-        name:product.name,
-        description:product.description,
-        price:product.price,
-        stock:parseInt(product.stock),
-        productImage:product.productimage,   
+    if (!url || !productObj) {
+        console.error(`one or more of the data passed is missing. Got url: ${url}, product obj ${productObj}`)
     }
     return await fetchData({url: url, csrfToken: CSRF_TOKEN, body: productObj, method: "POST" })
   
 }
+
 
 
 

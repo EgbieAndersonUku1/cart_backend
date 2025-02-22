@@ -106,3 +106,44 @@ export function showSpinnerFor(spinnerElement, timeToDisplay = 500) {
         toggleSpinner(spinnerElement, false);  
     }, timeToDisplay);
 }
+
+
+
+export const parser = {
+    _product: null,
+
+    getProductDataToAdd: () => {
+        if (!parser._product) {
+            return {};
+        }
+
+        return {
+            productID: parser._product.productid || "N/A",
+            name: parser._product.name || "Unnamed Product",
+            description: parser._product.description || "No description available",
+            price: parseFloat(parser._product.price) || 0.0,
+            stock: parseInt(parser._product.stock, 10) || 0,
+            productImage: parser._product.productimage || "default.jpg",
+        };
+    },
+
+    getProductDataToRemove: () => {
+        if (!parser._product || !parser._product.productid) {
+            return null;
+        }
+        return { productID: parser._product.productid };
+    },
+
+    setElementToParser: (element) => {
+        if (!element || !element.dataset) {
+            console.error("Invalid element passed to setElementToParser");
+            return;
+        }
+
+        parser._product = { ...element.dataset };
+
+        // Ensure numerical values are properly converted
+        parser._product.stock = parseInt(parser._product.stock, 10) || 0;
+        parser._product.price = parseFloat(parser._product.price) || 0.0;
+    },
+};
