@@ -24,6 +24,13 @@ class Product(models.Model):
             models.Index(fields=['name', 'price']),  # Composite index on name and price for faster lookup when combined look up
         ]
     
+    @classmethod
+    def get_by_id(cls, id):
+        try:
+            cls.objects.get(id=id)
+        except cls.DoesNotExist:
+            return None
+        
     @property
     def product_image(self):
         """Returns the direct url path to the image."""

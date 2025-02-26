@@ -29,6 +29,18 @@ class CartRequestSession:
         
         self._cart = self._request.session.get(session_name, {})
     
+    
+    def update_session_qty(self, product_id, qty):
+        """"""
+        try:
+            self._cart[product_id]["qty"]
+        except KeyError as e:
+            raise KeyError(f"Couldn't find the or the product id or qty and couldn't be updated: {e}")
+        
+        self._cart[product_id]["qty"] = qty
+        
+        
+        
     def add_to_session(self, product_data: dict) -> bool:
         """
         Adds product data to the cart stored in the request session.

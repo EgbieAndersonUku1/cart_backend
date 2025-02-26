@@ -11,10 +11,14 @@ from store.views_helper import handle_csrf_validation, create_json, get_product_
 
 def home(request):
     
-    request.session["guest_user"] = {}
+    if "guest_user" not in request.session:
+        request.session["guest_user"] = {}
     
     if not request.session.session_key:
         request.session.save()
+        
+    if "id" not in request.session["guest_user"]:
+         request.session["guest_user"]["id"] = request.session.session_key 
 
     csrf_token = get_token(request)
     cart       = CartRequestSession(request)
@@ -23,6 +27,7 @@ def home(request):
     # Without this, each call to `get_token(request)` generates a new CSRF token, instead of reusing 
     # the one sent to the frontend from the backend, this means that CSRF_TOKEN will never match.
     request.session["guest_user"]["CSRF_TOKEN"] = csrf_token
+    request.session["guest_user"]["id"] = request.session.session_key
     
     products = Product.objects.all()
     
@@ -47,8 +52,7 @@ def add_to_basket(request):
         return response
                  
     is_success, product_data, json_data = get_product_data_from_request(request, cart)
-
-    if is_success == False and json_data.get("error"):
+    if is_success == False:
         return json_data
        
     try:
@@ -61,22 +65,3 @@ def add_to_basket(request):
   
 
 
-def remove_from_basket(request):
-    
-    if request.method != "POST":
-        return create_json(error='Only a POST response is allowed', status_code=405)
-    
-    cart      = CartRequestSession(request)
-    response  = handle_csrf_validation(request, cart)
-    
-    if response is not None:
-        return response
-    
-    is_success, product_data, json_data = get_product_data_from_request(request, cart)
-    
-    if is_success == False and json_data.get("error"):
-        return json_data
-    
-    cart.remove_from_session(product_data)
-    
-    return create_json(cart=cart, message='Added product to cart request session', is_success=True, status_code=200)
